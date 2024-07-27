@@ -1,9 +1,9 @@
 import { YStack, H4, Paragraph } from 'tamagui';
 
 export const EditScreenInfo = ({ path }: { path: string }) => {
-  const title = 'Open up the code for this screen:';
+  const title = 'Página Home';
   const description =
-    'Change any of the text, save the file, and your app will automatically update.';
+    'Pagina Inicial ';
 
   return (
     <YStack>
