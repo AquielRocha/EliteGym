@@ -6,9 +6,7 @@ import InfoCard from '~/components/InfoCard'; // Ajuste o caminho conforme neces
 export default function InfoAulas() {
   return (
     <YStack padding="$4" space="$4" flex={1}>
-      <Text >
-        Bem-vindo à Página de Aulas
-      </Text>
+
       <InfoCard
         title="Adicionar Nova Aula"
         description="Você pode adicionar uma nova aula preenchendo os detalhes, incluindo foto, vídeo e uma descrição. Defina a data e salve a aula no sistema."

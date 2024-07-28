@@ -3,6 +3,7 @@ import { Stack, SplashScreen } from 'expo-router';
 import React, { useEffect } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { TamaguiProvider } from 'tamagui';
+import Firebase from '../../utils/firebase';
 
 import config from '../../tamagui.config';
 

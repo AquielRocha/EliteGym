@@ -1,8 +1,11 @@
-import { ScrollView } from 'react-native';
+import React from 'react';
+import { ScrollView, Dimensions, StyleSheet } from 'react-native';
 import { View, Text, YStack, Button } from 'tamagui';
 import { BarChart, LineChart } from 'react-native-chart-kit';
-import { Dimensions } from 'react-native';
+import { Link } from 'expo-router';
 import { Container } from '~/components/Container';
+import { useRouter } from 'expo-router';
+
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -10,21 +13,23 @@ const barChartData = {
   labels: ['Alunos', 'Turmas', 'Instrutores'],
   datasets: [
     {
-      data: [120, 15, 10]
-    }
-  ]
+      data: [40, 6, 10],
+    },
+  ],
 };
 
 const lineChartData = {
   labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
   datasets: [
     {
-      data: [50, 70, 60, 90, 85]
-    }
-  ]
+      data: [50, 70, 60, 90, 85],
+    },
+  ],
 };
 
 export default function Home() {
+  const router = useRouter();
+
   return (
     <Container>
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
@@ -70,15 +75,12 @@ export default function Home() {
                 Ações Rápidas
               </Text>
               <YStack space="$2" marginTop="$2">
-                <Button size="$3" backgroundColor="$primary" color="$white">
-                  Adicionar Novo Aluno
+       
+              <Button onPress={() => router.push('/Aulas')}>
+                  Aulas
                 </Button>
-                <Button size="$3" backgroundColor="$primary" color="$white">
-                  Criar Nova Turma
-                </Button>
-                <Button size="$3" backgroundColor="$primary" color="$white">
-                  Gerenciar Instrutores
-                </Button>
+
+               
               </YStack>
             </YStack>
           </YStack>
@@ -106,9 +108,7 @@ export default function Home() {
                 }}
                 style={{ marginVertical: 8 }}
               />
-              <Text fontSize="$4" color="$white">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam aperiam, expedita maxime vero numquam commodi sint itaque. Exercitationem, error vero. Sed doloremque molestias ipsum a sunt repellendus animi perferendis commodi?
-              </Text>
+        
               <Text fontSize="$4" color="$white">
                 - bla bla bla
               </Text>
@@ -122,3 +122,12 @@ export default function Home() {
     </Container>
   );
 }
+
+// Estilos opcionais
+const styles = StyleSheet.create({
+  header: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 16,
+  },
+});
