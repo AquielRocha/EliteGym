@@ -1,7 +1,5 @@
-import { Entypo, Feather, Fontisto, Ionicons } from '@expo/vector-icons';
+import { Feather, Ionicons } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
-
-import { TabBarIcon } from '~/components/TabBarIcon';
 
 export default function AulaLayout() {
   return (
@@ -10,47 +8,26 @@ export default function AulaLayout() {
         headerShown: false,
         tabBarActiveTintColor: 'black',
       }}>
-      {/* <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Tab One',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="two"
-        options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-        }}
-      /> */}
-      {/* <Tabs.Screen
-        name="aula"
-        options={{
-          title: 'Aula',
-          tabBarIcon: ({ color }) => (
-            <Entypo name="calendar" size={24} color={color} />
-          ),
-        }}
-      /> */}
         <Tabs.Screen
-          name="config"
+          name="Aulas"
           options={{
-            title: 'Config',
+            title: 'Listar Aulas',
             tabBarIcon: ({ color }) => (
-              <Ionicons name="settings-outline" size={24} color={color} />
+              <Ionicons name="list" size={24} color={color} />
             ),
           }}
         />
+
       <Tabs.Screen
-        name="user"
+        name="IncluirAulas"
         options={{
-          title: 'Conta',
+          title: 'Incluir Aulas',
           tabBarIcon: ({ color }) => (
-            <Ionicons name="person-outline" size={24} color={color} />
+            <Feather name="plus" size={24} color={color} />
           ),
         }}
       />
+
     </Tabs>
   );
 }

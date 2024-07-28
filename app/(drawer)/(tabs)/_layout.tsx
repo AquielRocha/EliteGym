@@ -10,29 +10,7 @@ export default function TabLayout() {
         headerShown: false,
         tabBarActiveTintColor: 'black',
       }}>
-      {/* <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Tab One',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="two"
-        options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-        }}
-      /> */}
-      {/* <Tabs.Screen
-        name="aula"
-        options={{
-          title: 'Aula',
-          tabBarIcon: ({ color }) => (
-            <Entypo name="calendar" size={24} color={color} />
-          ),
-        }}
-      /> */}
+
         <Tabs.Screen
           name="config"
           options={{
