@@ -8,7 +8,7 @@ import { HeaderButton } from '~/components/HeaderButton';
 const DrawerLayout: React.FC = () => (
   <Drawer>
     <Drawer.Screen
-      name="index"
+      name="home"
       options={{
         headerTitle: () => (
           <View style={styles.headerTitleContainer}>
@@ -23,7 +23,7 @@ const DrawerLayout: React.FC = () => (
       }}
     />
     <Drawer.Screen
-      name="(tabs)"
+      name="(opcoes)"
       options={{
         headerTitle: () => (
           <View style={styles.headerTitleContainer}>
@@ -33,7 +33,7 @@ const DrawerLayout: React.FC = () => (
         ),
         drawerLabel: 'Opções',
         drawerIcon: ({ size, color }) => (
-          <Ionicons name="options" size={size} color={color} />
+          <Ionicons name="settings-outline" size={size} color={color} />
         ),
         headerRight: () => (
           <Link href="/modal" asChild>
@@ -73,7 +73,47 @@ const DrawerLayout: React.FC = () => (
         ),
         drawerLabel: 'Aulas',
         drawerIcon: ({ size, color }) => (
-          <Entypo name="calendar" size={24} color={color} />
+          <MaterialIcons name="event" size={size} color={color} />
+        ),
+        headerRight: () => (
+          <Link href="/modal" asChild>
+            <HeaderButton />
+          </Link>
+        ),
+      }}
+    />
+    <Drawer.Screen
+      name="(usuarios)"
+      options={{
+        headerTitle: () => (
+          <View style={styles.headerTitleContainer}>
+            <FontAwesome6 name="dumbbell" size={24} color="black" />
+            <Text style={styles.headerTitleText}>EliteGym</Text>
+          </View>
+        ),
+        drawerLabel: 'Usuários/Alunos',
+        drawerIcon: ({ size, color }) => (
+          <Ionicons name="people-outline" size={size} color={color} />
+        ),
+        headerRight: () => (
+          <Link href="/modal" asChild>
+            <HeaderButton />
+          </Link>
+        ),
+      }}
+    />
+    <Drawer.Screen
+      name="(financeiro)"
+      options={{
+        headerTitle: () => (
+          <View style={styles.headerTitleContainer}>
+            <FontAwesome6 name="dumbbell" size={24} color="black" />
+            <Text style={styles.headerTitleText}>EliteGym</Text>
+          </View>
+        ),
+        drawerLabel: 'Financeiro',
+        drawerIcon: ({ size, color }) => (
+          <MaterialIcons name="attach-money" size={size} color={color} />
         ),
         headerRight: () => (
           <Link href="/modal" asChild>
