@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { Ionicons, MaterialIcons, FontAwesome6 } from '@expo/vector-icons';
+import { Ionicons, MaterialIcons, FontAwesome6, Entypo, FontAwesome5 } from '@expo/vector-icons';
 import { Link } from 'expo-router';
 import { Drawer } from 'expo-router/drawer';
 import { HeaderButton } from '../../components/HeaderButton';
@@ -28,7 +28,37 @@ const DrawerLayout: React.FC = () => (
         headerTitle: 'EliteGym',
         drawerLabel: 'Opções',
         drawerIcon: ({ size, color }) => (
-          <MaterialIcons name="border-bottom" size={size} color={color} />
+          <Ionicons name="options" size={size} color={color} />
+        ),
+        headerRight: () => (
+          <Link href="/modal" asChild>
+            <HeaderButton />
+          </Link>
+        ),
+      }}
+    />
+    <Drawer.Screen
+      name="(aparelhos)"
+      options={{
+        headerTitle: 'EliteGym',
+        drawerLabel: 'Aparelhos',
+        drawerIcon: ({ size, color }) => (
+          <FontAwesome5 name="dumbbell" size={size} color={color} />
+        ),
+        headerRight: () => (
+          <Link href="/modal" asChild>
+            <HeaderButton />
+          </Link>
+        ),
+      }}
+    />
+    <Drawer.Screen
+      name="(aula)"
+      options={{
+        headerTitle: 'EliteGym',
+        drawerLabel: 'Aulas',
+        drawerIcon: ({ size, color }) => (
+          <Entypo name="calendar" size={24} color={color} />
         ),
         headerRight: () => (
           <Link href="/modal" asChild>

@@ -6,9 +6,9 @@
 // export default function Home() {
 //   return (
 //     <>
-//       <Stack.Screen options={{ title: 'Tabzin 1' }} />
+//       <Stack.Screen options={{ title: 'aula' }} />
 //       <Container>
-//         <ScreenContent path="app/(drawer)/(tabs)/index.tsx" title="Tab One" />
+//         <ScreenContent path="app/(drawer)/(tabs)/two.tsx" title="aula" />
 //       </Container>
 //     </>
 //   );
