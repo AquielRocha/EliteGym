@@ -25,7 +25,12 @@ const DrawerLayout: React.FC = () => (
     <Drawer.Screen
       name="(tabs)"
       options={{
-        headerTitle: 'EliteGym',
+        headerTitle: () => (
+          <View style={styles.headerTitleContainer}>
+            <FontAwesome6 name="dumbbell" size={24} color="black" />
+            <Text style={styles.headerTitleText}>EliteGym</Text>
+          </View>
+        ),
         drawerLabel: 'Opções',
         drawerIcon: ({ size, color }) => (
           <Ionicons name="options" size={size} color={color} />
@@ -40,7 +45,12 @@ const DrawerLayout: React.FC = () => (
     <Drawer.Screen
       name="(aparelhos)"
       options={{
-        headerTitle: 'EliteGym',
+        headerTitle: () => (
+          <View style={styles.headerTitleContainer}>
+            <FontAwesome6 name="dumbbell" size={24} color="black" />
+            <Text style={styles.headerTitleText}>EliteGym</Text>
+          </View>
+        ),
         drawerLabel: 'Aparelhos',
         drawerIcon: ({ size, color }) => (
           <FontAwesome5 name="dumbbell" size={size} color={color} />
@@ -55,7 +65,12 @@ const DrawerLayout: React.FC = () => (
     <Drawer.Screen
       name="(aula)"
       options={{
-        headerTitle: 'EliteGym',
+        headerTitle: () => (
+          <View style={styles.headerTitleContainer}>
+            <FontAwesome6 name="dumbbell" size={24} color="black" />
+            <Text style={styles.headerTitleText}>EliteGym</Text>
+          </View>
+        ),
         drawerLabel: 'Aulas',
         drawerIcon: ({ size, color }) => (
           <Entypo name="calendar" size={24} color={color} />
