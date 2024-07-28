@@ -11,7 +11,7 @@ export default function AulaLayout() {
         <Tabs.Screen
           name="Aulas"
           options={{
-            title: 'Listar Aulas',
+            title: 'Aulas',
             tabBarIcon: ({ color }) => (
               <Ionicons name="list" size={24} color={color} />
             ),

@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { TamaguiProvider } from 'tamagui';
 
-import config from '../tamagui.config';
+import config from '../../tamagui.config';
 
 SplashScreen.preventAutoHideAsync();
 

@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { Ionicons, MaterialIcons, FontAwesome6, Entypo, FontAwesome5 } from '@expo/vector-icons';
 import { Link } from 'expo-router';
 import { Drawer } from 'expo-router/drawer';
-import { HeaderButton } from '../../components/HeaderButton';
+import { HeaderButton } from '~/components/HeaderButton';
 
 const DrawerLayout: React.FC = () => (
   <Drawer>
