@@ -1,13 +1,13 @@
-import { initializeApp } from 'firebase/app';
+import { initializeApp, getApps, getApp } from 'firebase/app';
+import 'firebase/firestore'
+// Import the services you need
+// import { getAuth } from 'firebase/auth';
+// import { getDatabase } from 'firebase/database';
+// import { getFirestore } from 'firebase/firestore';
+// import { getFunctions } from 'firebase/functions';
+// import { getStorage } from 'firebase/storage';
 
-// Optionally import the services that you want to use
-// import {...} from "firebase/auth";
-// import {...} from "firebase/database";
-// import {...} from "firebase/firestore";
-// import {...} from "firebase/functions";
-// import {...} from "firebase/storage";
-
-// Initialize Firebase
+// Firebase configuration object
 const firebaseConfig = {
   apiKey: process.env.EXPO_PUBLIC_FIREBASE_API_KEY,
   authDomain: process.env.EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN,
@@ -19,8 +19,7 @@ const firebaseConfig = {
   measurementId: process.env.EXPO_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
-const firebase = initializeApp(firebaseConfig);
-// For more information on how to access Firebase in your project,
-// see the Firebase documentation: https://firebase.google.com/docs/web/setup#access-firebase
+// Initialize Firebase
+const firebaseApp = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 
-export default firebase;
+export default firebaseApp;

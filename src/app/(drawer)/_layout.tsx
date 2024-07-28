@@ -1,14 +1,13 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { Ionicons, MaterialIcons, FontAwesome6, Entypo, FontAwesome5 } from '@expo/vector-icons';
+import { Ionicons, MaterialIcons, FontAwesome6, FontAwesome5 } from '@expo/vector-icons';
 import { Link } from 'expo-router';
 import { Drawer } from 'expo-router/drawer';
-import { HeaderButton } from '~/components/HeaderButton';
 
 const DrawerLayout: React.FC = () => (
   <Drawer>
     <Drawer.Screen
-      name="home"
+      name="index"
       options={{
         headerTitle: () => (
           <View style={styles.headerTitleContainer}>
@@ -36,8 +35,8 @@ const DrawerLayout: React.FC = () => (
           <Ionicons name="settings-outline" size={size} color={color} />
         ),
         headerRight: () => (
-          <Link href="/modal" asChild>
-            <HeaderButton />
+          <Link href="/info/opcoes" asChild>
+            <Ionicons name="information-circle-outline" size={24} color="black" />
           </Link>
         ),
       }}
@@ -56,8 +55,8 @@ const DrawerLayout: React.FC = () => (
           <FontAwesome5 name="dumbbell" size={size} color={color} />
         ),
         headerRight: () => (
-          <Link href="/modal" asChild>
-            <HeaderButton />
+          <Link href="/info/aparelhos" asChild>
+            <Ionicons name="information-circle-outline" size={24} color="black" />
           </Link>
         ),
       }}
@@ -76,8 +75,8 @@ const DrawerLayout: React.FC = () => (
           <MaterialIcons name="event" size={size} color={color} />
         ),
         headerRight: () => (
-          <Link href="/modal" asChild>
-            <HeaderButton />
+          <Link href="/info/aulas" asChild>
+            <Ionicons name="information-circle-outline" size={24} color="black" />
           </Link>
         ),
       }}
@@ -96,8 +95,8 @@ const DrawerLayout: React.FC = () => (
           <Ionicons name="people-outline" size={size} color={color} />
         ),
         headerRight: () => (
-          <Link href="/modal" asChild>
-            <HeaderButton />
+          <Link href="/info/usuarios" asChild>
+            <Ionicons name="information-circle-outline" size={24} color="black" />
           </Link>
         ),
       }}
@@ -116,8 +115,8 @@ const DrawerLayout: React.FC = () => (
           <MaterialIcons name="attach-money" size={size} color={color} />
         ),
         headerRight: () => (
-          <Link href="/modal" asChild>
-            <HeaderButton />
+          <Link href="/info/financeiro" asChild>
+            <Ionicons name="information-circle-outline" size={24} color="black" />
           </Link>
         ),
       }}

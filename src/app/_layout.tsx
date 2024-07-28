@@ -32,7 +32,12 @@ export default function RootLayout() {
       <GestureHandlerRootView style={{ flex: 1 }}>
         <Stack>
           <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
-          <Stack.Screen name="modal" options={{ title: 'Modal', presentation: 'modal' }} />
+          <Stack.Screen name="info/modal" options={{ title: 'fodase', presentation: 'modal' }} />
+          <Stack.Screen name="info/aulas" options={{ title: 'Detalhes', presentation: 'modal' }} />
+          <Stack.Screen name="info/opcoes" options={{ title: 'opcções', presentation: 'modal' }} />
+          <Stack.Screen name="info/aparelhos" options={{ title: 'Detalhes da pagina', presentation: 'modal' }} />
+          <Stack.Screen name="info/financeiro" options={{ title: 'Detalhes da pagina', presentation: 'modal' }} />
+          <Stack.Screen name="info/usuarios" options={{ title: 'Detalhes da pagina', presentation: 'modal' }} />
         </Stack>
       </GestureHandlerRootView>
     </TamaguiProvider>
