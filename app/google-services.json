@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "901136387186",
+    "project_id": "elitegynn",
+    "storage_bucket": "elitegynn.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:901136387186:android:f0f03c48814f9e79e906eb",
+        "android_client_info": {
+          "package_name": "com.elitegym.gymapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDacNniq-lAfN_0gTfGUH5VQ1anu1kdJ1k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
