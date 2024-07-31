@@ -101,6 +101,7 @@ const DrawerLayout: React.FC = () => (
         ),
       }}
     />
+
     <Drawer.Screen
       name="(financeiro)"
       options={{
@@ -121,6 +122,7 @@ const DrawerLayout: React.FC = () => (
         ),
       }}
     />
+
   </Drawer>
 );
 

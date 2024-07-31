@@ -3,15 +3,12 @@ import { Stack, SplashScreen } from 'expo-router';
 import React, { useEffect } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { TamaguiProvider } from 'tamagui';
-import Firebase from '../../utils/firebase';
-
 import config from '../../tamagui.config';
 
 SplashScreen.preventAutoHideAsync();
 
 export const unstable_settings = {
-  // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: '(drawer)',
+  initialRouteName: '(auth)/index', // Define a tela principal da pasta (auth)
 };
 
 export default function RootLayout() {
@@ -32,13 +29,19 @@ export default function RootLayout() {
     <TamaguiProvider config={config}>
       <GestureHandlerRootView style={{ flex: 1 }}>
         <Stack>
+          {/* Telas de Autenticação */}
+          <Stack.Screen name="(auth)/index" options={{ headerShown: false }} />
+          <Stack.Screen name="(auth)/login" options={{ headerShown: false }} />
+          <Stack.Screen name="(auth)/register" options={{ headerShown: false }} />
           <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
+
+          {/* Outras Telas e Modais */}
           <Stack.Screen name="info/modal" options={{ title: 'fodase', presentation: 'modal' }} />
           <Stack.Screen name="info/aulas" options={{ title: 'Detalhes', presentation: 'modal' }} />
-          <Stack.Screen name="info/opcoes" options={{ title: 'opcções', presentation: 'modal' }} />
-          <Stack.Screen name="info/aparelhos" options={{ title: 'Detalhes da pagina', presentation: 'modal' }} />
-          <Stack.Screen name="info/financeiro" options={{ title: 'Detalhes da pagina', presentation: 'modal' }} />
-          <Stack.Screen name="info/usuarios" options={{ title: 'Detalhes da pagina', presentation: 'modal' }} />
+          <Stack.Screen name="info/opcoes" options={{ title: 'opções', presentation: 'modal' }} />
+          <Stack.Screen name="info/aparelhos" options={{ title: 'Detalhes da página', presentation: 'modal' }} />
+          <Stack.Screen name="info/financeiro" options={{ title: 'Detalhes da página', presentation: 'modal' }} />
+          <Stack.Screen name="info/usuarios" options={{ title: 'Detalhes da página', presentation: 'modal' }} />
         </Stack>
       </GestureHandlerRootView>
     </TamaguiProvider>
