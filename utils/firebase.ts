@@ -1,11 +1,7 @@
 import { initializeApp, getApps, getApp } from 'firebase/app';
-import 'firebase/firestore'
-// Import the services you need
-// import { getAuth } from 'firebase/auth';
-// import { getDatabase } from 'firebase/database';
-// import { getFirestore } from 'firebase/firestore';
-// import { getFunctions } from 'firebase/functions';
-// import { getStorage } from 'firebase/storage';
+import { getAuth } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
+// Importe outros serviços conforme necessário
 
 // Firebase configuration object
 const firebaseConfig = {
@@ -22,4 +18,9 @@ const firebaseConfig = {
 // Initialize Firebase
 const firebaseApp = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 
-export default firebaseApp;
+// Initialize services
+const auth = getAuth(firebaseApp);
+const firestore = getFirestore(firebaseApp);
+// Inicialize outros serviços conforme necessário
+
+export { firebaseApp, auth, firestore };

@@ -15,7 +15,7 @@ const AuthIndexScreen = () => {
     router.push('/(auth)/register'); // Navega para a tela de registro
   };
   const goToAcessoFacil = () => {
-    router.push('/(drawer)'); // Navega para a tela de registro
+    router.push('/(drawer)'); // Navega para a tela de facil
   };
 
   return (
