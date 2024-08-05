@@ -3,6 +3,7 @@ import { Stack, SplashScreen } from 'expo-router';
 import React, { useEffect } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { TamaguiProvider } from 'tamagui';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import config from '../../tamagui.config';
 
 SplashScreen.preventAutoHideAsync();
@@ -25,25 +26,30 @@ export default function RootLayout() {
 
   if (!loaded) return null;
 
+  // Crie uma instância do QueryClient
+  const queryClient = new QueryClient();
+
   return (
     <TamaguiProvider config={config}>
-      <GestureHandlerRootView style={{ flex: 1 }}>
-        <Stack>
-          {/* Telas de Autenticação */}
-          <Stack.Screen name="(auth)/index" options={{ headerShown: false }} />
-          <Stack.Screen name="(auth)/login" options={{ headerShown: false }} />
-          <Stack.Screen name="(auth)/register" options={{ headerShown: false }} />
-          <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
+      <QueryClientProvider client={queryClient}>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <Stack>
+            {/* Telas de Autenticação */}
+            <Stack.Screen name="(auth)/index" options={{ headerShown: false }} />
+            <Stack.Screen name="(auth)/login" options={{ headerShown: false }} />
+            <Stack.Screen name="(auth)/register" options={{ headerShown: false }} />
+            <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
 
-          {/* Outras Telas e Modais */}
-          <Stack.Screen name="info/modal" options={{ title: 'fodase', presentation: 'modal' }} />
-          <Stack.Screen name="info/aulas" options={{ title: 'Detalhes', presentation: 'modal' }} />
-          <Stack.Screen name="info/opcoes" options={{ title: 'opções', presentation: 'modal' }} />
-          <Stack.Screen name="info/aparelhos" options={{ title: 'Detalhes da página', presentation: 'modal' }} />
-          <Stack.Screen name="info/financeiro" options={{ title: 'Detalhes da página', presentation: 'modal' }} />
-          <Stack.Screen name="info/usuarios" options={{ title: 'Detalhes da página', presentation: 'modal' }} />
-        </Stack>
-      </GestureHandlerRootView>
+            {/* Outras Telas e Modais */}
+            <Stack.Screen name="info/modal" options={{ title: 'fodase', presentation: 'modal' }} />
+            <Stack.Screen name="info/aulas" options={{ title: 'Detalhes', presentation: 'modal' }} />
+            <Stack.Screen name="info/opcoes" options={{ title: 'opções', presentation: 'modal' }} />
+            <Stack.Screen name="info/aparelhos" options={{ title: 'Detalhes da página', presentation: 'modal' }} />
+            <Stack.Screen name="info/financeiro" options={{ title: 'Detalhes da página', presentation: 'modal' }} />
+            <Stack.Screen name="info/usuarios" options={{ title: 'Detalhes da página', presentation: 'modal' }} />
+          </Stack>
+        </GestureHandlerRootView>
+      </QueryClientProvider>
     </TamaguiProvider>
   );
 }
