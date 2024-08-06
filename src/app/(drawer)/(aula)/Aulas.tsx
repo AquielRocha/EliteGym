@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
-import { Button, ScrollView, View, YStack } from 'tamagui';
-import { Text } from 'tamagui';
+import { ScrollView, View, StyleSheet} from 'react-native';
+import { Button, Text, YStack, Input  } from 'tamagui';
 import Spacer from '~/components/Spacer';
-import TextInput from '~/components/TextInput';
 import { useAulas } from '../../../hooks/useAulas';
 import { useDeleteAula, useEditAula } from '../../../Mutation/useMutationeditAula'; // Atualize o caminho conforme necessário
 import { Alert } from 'react-native';
 
-// Define o tipo dos dados esperados
 interface Aula {
   id: number;
   nome: string;
@@ -56,13 +54,11 @@ export default function ListarAulas() {
 
   if (isLoading) {
     return (
-      <YStack padding="$4">
-        <Text fontSize="$5" fontWeight="bold" color="$white" marginBottom="$3">
+      <YStack padding="$4" flex={1} justifyContent="center" alignItems="center">
+        <Text fontSize="$5" fontWeight="bold" marginBottom="$3">
           Aulas da Academia
         </Text>
-        <View>
-          <Text>Carregando...</Text>
-        </View>
+        <Text>Carregando...</Text>
       </YStack>
     );
   }
@@ -70,13 +66,11 @@ export default function ListarAulas() {
   if (error) {
     console.error('Erro ao carregar aulas:', error);
     return (
-      <YStack padding="$4">
-        <Text fontSize="$5" fontWeight="bold" color="$white" marginBottom="$3">
+      <YStack padding="$4" flex={1} justifyContent="center" alignItems="center">
+        <Text fontSize="$5" fontWeight="bold" marginBottom="$3">
           Aulas da Academia
         </Text>
-        <View>
-          <Text>Erro ao carregar aulas</Text>
-        </View>
+        <Text>Erro ao carregar aulas</Text>
       </YStack>
     );
   }
@@ -84,52 +78,54 @@ export default function ListarAulas() {
   const aulas: Aula[] = data || [];
 
   return (
-    <YStack padding="$4">
-      <Text fontSize="$5" fontWeight="bold" color="$white" marginBottom="$3">
+    <YStack padding="$4" flex={1}>
+      <Text fontSize="$5" fontWeight="bold" marginBottom="$3">
         Aulas da Academia
       </Text>
       <ScrollView>
         {aulas.length > 0 ? (
           aulas.map((aula) => (
-            <YStack key={aula.id} padding="$2" borderBottomWidth={1} borderBottomColor="$gray" space="$2">
+            <YStack key={aula.id} padding="$2" borderBottomWidth={1}  space="$2">
               {editing?.id === aula.id ? (
                 <YStack space="$2">
                   <View style={styles.inputContainer}>
                     <Text style={styles.label}>Nome</Text>
-                    <TextInput
-                      style={styles.input}
+                    <Input
                       placeholder="Nome"
                       value={editedAula?.nome || ''}
-                      onChangeText={(text) => setEditedAula((prev) => (prev ? { ...prev, nome: text } : null))}
+                      onChangeText={(text: any) => setEditedAula((prev) => (prev ? { ...prev, nome: text } : null))}
                     />
                   </View>
                   <View style={styles.inputContainer}>
                     <Text style={styles.label}>Descrição</Text>
-                    <TextInput
-                      style={styles.input}
+                    <Input
                       placeholder="Descrição"
                       value={editedAula?.descricao || ''}
-                      onChangeText={(text) => setEditedAula((prev) => (prev ? { ...prev, descricao: text } : null))}
+                      onChangeText={(text: any) => setEditedAula((prev) => (prev ? { ...prev, descricao: text } : null))}
                     />
                   </View>
-                  <YStack flexDirection="row" space="$2">
-                    <Button onPress={handleSave}>Salvar</Button>
+                  <YStack flexDirection="row" space="$2" justifyContent="space-between">
+                    <Button onPress={handleSave} size="$3">
+                      Salvar
+                    </Button>
                     <Spacer />
-                    <Button onPress={() => setEditing(null)} color="gray">
+                    <Button onPress={() => setEditing(null)} size="$3">
                       Cancelar
                     </Button>
                   </YStack>
                 </YStack>
               ) : (
                 <YStack space="$2">
-                  <Text fontSize="$4" fontWeight="bold" color="$white">
+                  <Text fontSize="$4" fontWeight="bold">
                     {aula.nome}
                   </Text>
-                  <Text color="$lightGray">{aula.descricao}</Text>
-                  <YStack flexDirection="row" space="$2">
-                    <Button onPress={() => handleEdit(aula)}>Editar</Button>
+                  <Text>{aula.descricao}</Text>
+                  <YStack flexDirection="row" space="$2" justifyContent="space-between">
+                    <Button onPress={() => handleEdit(aula)} size="$3">
+                      Editar
+                    </Button>
                     <Spacer />
-                    <Button onPress={() => handleDelete(aula.id)} color="red">
+                    <Button onPress={() => handleDelete(aula.id)} size="$3">
                       Deletar
                     </Button>
                   </YStack>
@@ -145,17 +141,12 @@ export default function ListarAulas() {
   );
 }
 
-const styles = {
+const styles = StyleSheet.create({
   inputContainer: {
     marginBottom: 10,
   },
   label: {
     fontWeight: 'bold',
   },
-  input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    padding: 8,
-    borderRadius: 4,
-  },
-};
+
+});

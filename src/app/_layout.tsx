@@ -36,6 +36,7 @@ export default function RootLayout() {
           <Stack>
             {/* Telas de Autenticação */}
             <Stack.Screen name="(auth)/index" options={{ headerShown: false }} />
+            <Stack.Screen name="(auth)/LandingPage" options={{ headerShown: false }} />
             <Stack.Screen name="(auth)/login" options={{ headerShown: false }} />
             <Stack.Screen name="(auth)/register" options={{ headerShown: false }} />
             <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
