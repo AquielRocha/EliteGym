@@ -30,7 +30,7 @@ const LandingPage = () => {
         <Button
           onPress={goToLogin}
           style={styles.button}
-          size="large"
+          size="$9"
         >
           <FontAwesome5 name="sign-in-alt" size={20} color="white" />
           <Text style={styles.buttonText}>Login</Text>
@@ -38,7 +38,7 @@ const LandingPage = () => {
         <Button
           onPress={goToRegister}
           style={styles.button}
-          size="large"
+          size="$9"
         >
           <FontAwesome5 name="user-plus" size={20} color="white" />
           <Text style={styles.buttonText}>Register</Text>

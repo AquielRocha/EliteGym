@@ -37,7 +37,7 @@ const Register = () => {
         router.push('/(auth)/login');
       }, 3000);
     } catch (error) {
-      Alert.alert('Erro de registro', 'Erro ao registrar. Tente novamente.');
+      Alert.alert('Erssro de registro', 'Erro ao registrar. Tente novamente.');
       //@ts-ignore
       setError(error.message);
     }
@@ -45,7 +45,7 @@ const Register = () => {
 
   return (
     <ImageBackground
-      source={{ uri: 'https://png.pngtree.com/background/20230618/original/pngtree-fitness-gym-s-3d-renderings-of-treadmills-or-running-machines-picture-image_3751253.jpg' }}
+      source={{ uri: 'https://th.bing.com/th/id/OIG1.m8HwssLfo2p.GBuY0wQL?w=1024&h=1024&rs=1&pid=ImgDetMain' }}
       style={styles.background}
     >
       <View style={styles.container}>

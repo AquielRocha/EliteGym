@@ -7,7 +7,7 @@ import axios from 'axios';
 import { useMutation } from '@tanstack/react-query';
 import Constants from 'expo-constants';
 
-const API_BASE_URL = 'http://10.0.2.2:5288/api/'; // Ajuste conforme necessário
+const API_BASE_URL = 'http://10.0.2.2:5288/api/'; // Ajuste conforme necessárisasdsdsado
 
 const IncluirAulas = () => {
   const [nome, setNome] = useState('');
@@ -48,7 +48,7 @@ const IncluirAulas = () => {
             <YStack>
               <Text fontSize="$2" marginBottom="$2">Nome</Text>
               <Input
-                placeholder="Nome da Aula"
+                placeholder="Nome da Aulaa"
                 value={nome}
                 onChangeText={setNome}
               />
