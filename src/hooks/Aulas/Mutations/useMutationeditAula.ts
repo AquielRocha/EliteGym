@@ -16,7 +16,7 @@ interface Aula {
 
 // Função para deletar uma aula
 const deleteAula = async (id: number) => {
-  await axios.delete(`${API_BASE_URL}Aulas/del/${id}`);
+  await axios.delete(`${API_BASE_URL}Aulas/del${id}`);
 };
 
 // Função para editar uma aula

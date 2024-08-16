@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { ScrollView, View, StyleSheet} from 'react-native';
-import { Button, Text, YStack, Input  } from 'tamagui';
+import { ScrollView, View, StyleSheet, Alert } from 'react-native';
+import { Button, Text, YStack, Input } from 'tamagui';
 import Spacer from '~/components/Spacer';
 import { useAulas } from '../../../hooks/useAulas';
-import { useDeleteAula, useEditAula } from '../../../Mutation/useMutationeditAula'; // Atualize o caminho conforme necessário
-import { Alert } from 'react-native';
+import { useDeleteAula, useEditAula } from '../../../hooks/Aulas/Mutations/useMutationeditAula'; // Atualize o caminho conforme necessário
 
 interface Aula {
   id: number;
@@ -16,7 +15,7 @@ interface Aula {
 }
 
 export default function ListarAulas() {
-  const { data, error, isLoading } = useAulas();
+  const { data, error, isLoading, refetch } = useAulas();
   const deleteAula = useDeleteAula();
   const editAula = useEditAula();
 
@@ -79,13 +78,18 @@ export default function ListarAulas() {
 
   return (
     <YStack padding="$4" flex={1}>
-      <Text fontSize="$5" fontWeight="bold" marginBottom="$3">
-        Aulas da Academia
-      </Text>
+      <YStack flexDirection="row" justifyContent="space-between" alignItems="center" marginBottom="$4">
+        <Text fontSize="$5" fontWeight="bold">
+          Aulas da Academia
+        </Text>
+        <Button size="$3" onPress={() => refetch()}>
+          Reload
+        </Button>
+      </YStack>
       <ScrollView>
         {aulas.length > 0 ? (
           aulas.map((aula) => (
-            <YStack key={aula.id} padding="$2" borderBottomWidth={1}  space="$2">
+            <YStack key={aula.id} padding="$2" borderBottomWidth={1} space="$2">
               {editing?.id === aula.id ? (
                 <YStack space="$2">
                   <View style={styles.inputContainer}>
@@ -148,5 +152,4 @@ const styles = StyleSheet.create({
   label: {
     fontWeight: 'bold',
   },
-
 });

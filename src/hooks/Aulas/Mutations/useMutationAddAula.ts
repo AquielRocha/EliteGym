@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useMutation } from '@tanstack/react-query';
 
-const API_BASE_URL = 'http://10.0.2.2:5288/api/'; // Ajuste conforme necessário
+const API_BASE_URL = 'http://10.0.2.2:5288/api/'; 
 
 interface Aula {
   nome: string;

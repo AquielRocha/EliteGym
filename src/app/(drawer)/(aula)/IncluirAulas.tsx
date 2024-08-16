@@ -12,23 +12,17 @@ const IncluirAulas = () => {
   const [video, setVideo] = useState('');
   const [tipo, setTipo] = useState('');
 
-  const mutation = useMutationAddAulas();
+  const { mutate: addAula, isError } = useMutationAddAulas();
 
   const handleSubmit = () => {
-    mutation.mutate({
-      nome,
-      descricao,
-      foto,
-      video,
-      tipo,
-    });
+    const newAula = { nome, descricao, foto, video, tipo };
+    addAula(newAula);
   };
 
   return (
     <>
       <Stack.Screen options={{ title: 'Incluir Aulas' }} />
       <Container>
-        <ScreenContent path="app/(drawer)/(aula)/IncluirAulas.tsx" title="Incluir Aulas">
           <YStack padding="$4" space="$4">
             <YStack>
               <Text fontSize="$2" marginBottom="$2">Nome</Text>
@@ -71,17 +65,14 @@ const IncluirAulas = () => {
               />
             </YStack>
             <Spacer />
-            
-            
-            <Button onPress={handleSubmit} disabled={mutation.isLoading}>
-          //@ts-ignore
-{mutation.isLoading ? 'Adicionando...' : 'Adicionar Aula'}
+
+            <Button onPress={handleSubmit}>
+              Adicionar Aula
             </Button>
-            {mutation.isError && (
+            {isError && (
               <Text color="red">Erro ao adicionar aula.</Text>
             )}
           </YStack>
-        </ScreenContent>
       </Container>
     </>
   );
