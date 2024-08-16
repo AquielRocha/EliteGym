@@ -3,11 +3,7 @@ import { Stack } from 'expo-router';
 import { Container } from '~/components/Container';
 import { ScreenContent } from '~/components/ScreenContent';
 import { YStack, Input, Button, Text, Spacer } from 'tamagui';
-import axios from 'axios';
-import { useMutation } from '@tanstack/react-query';
-import Constants from 'expo-constants';
-
-const API_BASE_URL = 'http://10.0.2.2:5288/api/'; // Ajuste conforme necessárisasdsdsado
+import { useMutationAddAulas } from '~/src/hooks/Aulas/Mutations/useMutationAddAula';
 
 const IncluirAulas = () => {
   const [nome, setNome] = useState('');
@@ -16,18 +12,7 @@ const IncluirAulas = () => {
   const [video, setVideo] = useState('');
   const [tipo, setTipo] = useState('');
 
-  const mutation = useMutation({
-    mutationFn: async (newAula: { nome: string; descricao: string; foto: string; video: string; tipo: string }) => {
-      await axios.post(`${API_BASE_URL}Aulas/add`, newAula);
-    },
-    onSuccess: () => {
-      alert('Aula adicionada com sucesso!');
-    },
-    onError: (error) => {
-      console.error('Erro ao adicionar aula:', error);
-      alert('Erro ao adicionar aula.');
-    },
-  });
+  const mutation = useMutationAddAulas();
 
   const handleSubmit = () => {
     mutation.mutate({
@@ -48,7 +33,7 @@ const IncluirAulas = () => {
             <YStack>
               <Text fontSize="$2" marginBottom="$2">Nome</Text>
               <Input
-                placeholder="Nome da Aulaa"
+                placeholder="Nome da Aula"
                 value={nome}
                 onChangeText={setNome}
               />
@@ -86,9 +71,11 @@ const IncluirAulas = () => {
               />
             </YStack>
             <Spacer />
-
-            <Button onPress={handleSubmit} loading={mutation.isLoading}>
-              Adicionar Aula
+            
+            
+            <Button onPress={handleSubmit} disabled={mutation.isLoading}>
+          //@ts-ignore
+{mutation.isLoading ? 'Adicionando...' : 'Adicionar Aula'}
             </Button>
             {mutation.isError && (
               <Text color="red">Erro ao adicionar aula.</Text>
