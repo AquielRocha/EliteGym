@@ -13,7 +13,7 @@ import aulaSchema from '~/src/Interfaces/ZodSchema';
 type FormData = z.infer<typeof aulaSchema>;
 
 const IncluirAulas = () => {
-  const { mutate: addAula, isError, isSuccess } = useMutationAddAulas();
+  const { mutate: addAula, isError } = useMutationAddAulas();
 
   const { control, handleSubmit, reset, formState: { errors } } = useForm<FormData>({
     resolver: zodResolver(aulaSchema),
@@ -42,10 +42,12 @@ const IncluirAulas = () => {
             <Controller
               name="nome"
               control={control}
-              render={({ field }) => (
+              render={({ field: { onChange, onBlur, value } }) => (
                 <Input
                   placeholder="Nome da Aula"
-                  {...field}
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
                   style={{ borderColor: errors.nome ? 'red' : 'black', borderWidth: 1 }}
                 />
               )}
@@ -57,10 +59,12 @@ const IncluirAulas = () => {
             <Controller
               name="descricao"
               control={control}
-              render={({ field }) => (
+              render={({ field: { onChange, onBlur, value } }) => (
                 <Input
                   placeholder="Descrição"
-                  {...field}
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
                   style={{ borderColor: errors.descricao ? 'red' : 'black', borderWidth: 1 }}
                 />
               )}
@@ -72,10 +76,12 @@ const IncluirAulas = () => {
             <Controller
               name="foto"
               control={control}
-              render={({ field }) => (
+              render={({ field: { onChange, onBlur, value } }) => (
                 <Input
                   placeholder="Foto"
-                  {...field}
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
                   style={{ borderColor: errors.foto ? 'red' : 'black', borderWidth: 1 }}
                 />
               )}
@@ -87,10 +93,12 @@ const IncluirAulas = () => {
             <Controller
               name="video"
               control={control}
-              render={({ field }) => (
+              render={({ field: { onChange, onBlur, value } }) => (
                 <Input
                   placeholder="Vídeo"
-                  {...field}
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
                   style={{ borderColor: errors.video ? 'red' : 'black', borderWidth: 1 }}
                 />
               )}
@@ -102,10 +110,12 @@ const IncluirAulas = () => {
             <Controller
               name="tipo"
               control={control}
-              render={({ field }) => (
+              render={({ field: { onChange, onBlur, value } }) => (
                 <Input
                   placeholder="Tipo"
-                  {...field}
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
                   style={{ borderColor: errors.tipo ? 'red' : 'black', borderWidth: 1 }}
                 />
               )}

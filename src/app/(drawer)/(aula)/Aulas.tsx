@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import { ScrollView, View, StyleSheet, Alert } from 'react-native';
 import { Button, Text, YStack, Input } from 'tamagui';
-import Spacer from '~/components/Spacer';
-import { useDeleteAula, useEditAula } from '../../../hooks/Aulas/Mutations/useMutationeditAula';
-import { useQueryGetAll } from '~/src/hooks/Aulas/useQuerygetAllAulas';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import { useQueryGetAll } from '~/src/hooks/Aulas/useQuerygetAllAulas';
+import { useDeleteAula, useEditAula } from '~/src/hooks/Aulas/Mutations/useMutationeditAula';
+import CardAula from './Components/CardAula';
 
 interface Aula {
   id: number;
@@ -85,14 +83,14 @@ export default function ListarAulas() {
         <Text fontSize="$5" fontWeight="bold">
           Aulas da Academia
         </Text>
-        <Button size="$3" onPress={() => refetch()} style={styles.outlineButton}>
+        <Button size="$3" onPress={() => refetch()} style={styles.iconButton}>
           <Ionicons name="reload-outline" size={24} color="black" />
         </Button>
       </YStack>
       <ScrollView>
         {aulas.length > 0 ? (
           aulas.map((aula) => (
-            <YStack key={aula.id} padding="$2" borderBottomWidth={1} space="$2">
+            <YStack key={aula.id} padding="$2" space="$2">
               {editing?.id === aula.id ? (
                 <YStack space="$2">
                   <View style={styles.inputContainer}>
@@ -136,32 +134,20 @@ export default function ListarAulas() {
                     />
                   </View>
                   <YStack flexDirection="row" space="$2" justifyContent="space-between">
-                    <Button onPress={handleSave} size="$3" style={styles.outlineButton}>
+                    <Button onPress={handleSave} size="$3" style={styles.saveButton}>
                       Salvar
                     </Button>
-                    <Spacer />
-                    <Button onPress={() => setEditing(null)} size="$3" style={styles.outlineButton}>
+                    <Button onPress={() => setEditing(null)} size="$3" style={styles.cancelButton}>
                       Cancelar
                     </Button>
                   </YStack>
                 </YStack>
               ) : (
-                <YStack space="$2">
-                  <Text fontSize="$4" fontWeight="bold">
-                    {aula.nome}
-                  </Text>
-                  <Text>{aula.descricao}</Text>
-                  <YStack flexDirection="row" space="$2" justifyContent="space-between">
-                    <Button onPress={() => handleEdit(aula)} size="$3" style={styles.outlineButton}>
-                      <FontAwesome name="edit" size={24} color="black" />
-                    </Button>
-                    <Spacer />
-                    <Button onPress={() => handleDelete(aula.id)} size="$3" style={styles.outlineButton}>
-                      <MaterialIcons name="delete-outline" size={24} color="black" />
-                    </Button>
-                  </YStack>
-                  <View style={styles.separator} />
-                </YStack>
+                <CardAula
+                  aula={aula}
+                  onEdit={() => handleEdit(aula)}
+                  onDelete={() => handleDelete(aula.id)}
+                />
               )}
             </YStack>
           ))
@@ -180,14 +166,23 @@ const styles = StyleSheet.create({
   label: {
     fontWeight: 'bold',
   },
-  outlineButton: {
+  iconButton: {
+    backgroundColor: 'transparent',
     borderWidth: 1,
     borderColor: 'black',
-    backgroundColor: 'transparent',
+    borderRadius: 8,
+    padding: 4,
   },
-  separator: {
-    height: 1,
-    backgroundColor: '#ccc', 
-    marginVertical: 10, 
+  saveButton: {
+    backgroundColor: 'black',
+    borderWidth: 1,
+    borderColor: 'black',
+    borderRadius: 8,
+  },
+  cancelButton: {
+    backgroundColor: 'black',
+    borderWidth: 1,
+    borderColor: 'black',
+    borderRadius: 8,
   },
 });

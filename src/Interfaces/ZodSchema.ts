@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 const aulaSchema = z.object({
-  id: z.number().int().positive(), 
+  // id: z.number().int().positive(), 
   nome: z.string().min(1, "Nome é obrigatório").max(100, "Nome deve ter no máximo 100 caracteres"), 
   descricao: z.string().min(1, "Descrição é obrigatória").max(500, "Descrição deve ter no máximo 500 caracteres"), 
   foto: z.string().url("URL da foto deve ser válida").optional(), 

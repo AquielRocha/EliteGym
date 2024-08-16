@@ -50,7 +50,8 @@
     "react-query": "^3.39.3",
     "react-spring": "^9.7.4",
     "tamagui": "^1.74.8",
-    "zod": "^3.23.8"
+    "zod": "^3.23.8",
+    "expo-av": "~14.0.6"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

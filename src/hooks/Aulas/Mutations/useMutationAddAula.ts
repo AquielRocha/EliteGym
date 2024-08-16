@@ -14,14 +14,7 @@ interface Aula {
 export const useMutationAddAulas = () => {
   return useMutation({
     mutationFn: async (newAula: Aula) => {
-      await axios.post(`${API_BASE_URL}Aulas/add`, newAula);
-    },
-    onSuccess: () => {
-      alert('Aula adicionada com sucesso!');
-    },
-    onError: (error) => {
-      console.error('Erro ao adicionar aula:', error);
-      alert('Erro ao adicionar aula.');
+      return await axios.post(`${API_BASE_URL}Aulas/add`, newAula);
     },
   });
 };
