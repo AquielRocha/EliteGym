@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons'; // Usando FontAwesome5
+
 import { YStack, Button } from 'tamagui'; // Importando Button do Tamagui
 import { useRouter } from 'expo-router';
 
@@ -13,6 +14,9 @@ const LandingPage = () => {
 
   const goToRegister = () => {
     router.push('/register'); // Navega para a tela de registro
+  };
+  const goToAulas = () => {
+    router.push('/(aula)/Aulas'); // Navega para a tela de registro
   };
 
   return (
@@ -42,6 +46,14 @@ const LandingPage = () => {
         >
           <FontAwesome5 name="user-plus" size={20} color="white" />
           <Text style={styles.buttonText}>Register</Text>
+        </Button>
+        <Button
+          onPress={goToAulas}
+          style={styles.button}
+          size="$9"
+        >
+          <FontAwesome5 name="user" size={20} color="white" />
+          <Text style={styles.buttonText}>Aulas PRA FACILITAR MINHA VIDA</Text>
         </Button>
       </View>
       <View style={styles.imageContainer}>

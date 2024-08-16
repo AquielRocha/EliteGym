@@ -1,78 +1,126 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Stack } from 'expo-router';
 import { Container } from '~/components/Container';
-import { ScreenContent } from '~/components/ScreenContent';
 import { YStack, Input, Button, Text, Spacer } from 'tamagui';
 import { useMutationAddAulas } from '~/src/hooks/Aulas/Mutations/useMutationAddAula';
+import { Alert } from 'react-native';
+import { useForm, Controller } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import aulaSchema from '~/src/Interfaces/ZodSchema';
+
+// Define the form data type
+type FormData = z.infer<typeof aulaSchema>;
 
 const IncluirAulas = () => {
-  const [nome, setNome] = useState('');
-  const [descricao, setDescricao] = useState('');
-  const [foto, setFoto] = useState('');
-  const [video, setVideo] = useState('');
-  const [tipo, setTipo] = useState('');
+  const { mutate: addAula, isError, isSuccess } = useMutationAddAulas();
 
-  const { mutate: addAula, isError } = useMutationAddAulas();
+  const { control, handleSubmit, reset, formState: { errors } } = useForm<FormData>({
+    resolver: zodResolver(aulaSchema),
+  });
 
-  const handleSubmit = () => {
-    const newAula = { nome, descricao, foto, video, tipo };
-    addAula(newAula);
+  const onSubmit = (data: FormData) => {
+    //@ts-ignore
+    addAula(data, {
+      onSuccess: () => {
+        reset(); // Clear the form fields
+        Alert.alert('Sucesso', 'Aula adicionada com sucesso!');
+      },
+      onError: () => {
+        Alert.alert('Erro', 'Erro ao adicionar aula.');
+      },
+    });
   };
 
   return (
     <>
       <Stack.Screen options={{ title: 'Incluir Aulas' }} />
       <Container>
-          <YStack padding="$4" space="$4">
-            <YStack>
-              <Text fontSize="$2" marginBottom="$2">Nome</Text>
-              <Input
-                placeholder="Nome da Aula"
-                value={nome}
-                onChangeText={setNome}
-              />
-            </YStack>
-            <YStack>
-              <Text fontSize="$2" marginBottom="$2">Descrição</Text>
-              <Input
-                placeholder="Descrição"
-                value={descricao}
-                onChangeText={setDescricao}
-              />
-            </YStack>
-            <YStack>
-              <Text fontSize="$2" marginBottom="$2">Foto</Text>
-              <Input
-                placeholder="Foto"
-                value={foto}
-                onChangeText={setFoto}
-              />
-            </YStack>
-            <YStack>
-              <Text fontSize="$2" marginBottom="$2">Vídeo</Text>
-              <Input
-                placeholder="Vídeo"
-                value={video}
-                onChangeText={setVideo}
-              />
-            </YStack>
-            <YStack>
-              <Text fontSize="$2" marginBottom="$2">Tipo</Text>
-              <Input
-                placeholder="Tipo"
-                value={tipo}
-                onChangeText={setTipo}
-              />
-            </YStack>
-            <Spacer />
-
-            <Button onPress={handleSubmit}>
-              Adicionar Aula
-            </Button>
-            {isError && (
-              <Text color="red">Erro ao adicionar aula.</Text>
-            )}
+        <YStack padding="$4" space="$4">
+          <YStack>
+            <Text fontSize="$2" marginBottom="$2">Nome</Text>
+            <Controller
+              name="nome"
+              control={control}
+              render={({ field }) => (
+                <Input
+                  placeholder="Nome da Aula"
+                  {...field}
+                  style={{ borderColor: errors.nome ? 'red' : 'black', borderWidth: 1 }}
+                />
+              )}
+            />
+            {errors.nome && <Text color="red">{errors.nome.message}</Text>}
           </YStack>
+          <YStack>
+            <Text fontSize="$2" marginBottom="$2">Descrição</Text>
+            <Controller
+              name="descricao"
+              control={control}
+              render={({ field }) => (
+                <Input
+                  placeholder="Descrição"
+                  {...field}
+                  style={{ borderColor: errors.descricao ? 'red' : 'black', borderWidth: 1 }}
+                />
+              )}
+            />
+            {errors.descricao && <Text color="red">{errors.descricao.message}</Text>}
+          </YStack>
+          <YStack>
+            <Text fontSize="$2" marginBottom="$2">Foto</Text>
+            <Controller
+              name="foto"
+              control={control}
+              render={({ field }) => (
+                <Input
+                  placeholder="Foto"
+                  {...field}
+                  style={{ borderColor: errors.foto ? 'red' : 'black', borderWidth: 1 }}
+                />
+              )}
+            />
+            {errors.foto && <Text color="red">{errors.foto.message}</Text>}
+          </YStack>
+          <YStack>
+            <Text fontSize="$2" marginBottom="$2">Vídeo</Text>
+            <Controller
+              name="video"
+              control={control}
+              render={({ field }) => (
+                <Input
+                  placeholder="Vídeo"
+                  {...field}
+                  style={{ borderColor: errors.video ? 'red' : 'black', borderWidth: 1 }}
+                />
+              )}
+            />
+            {errors.video && <Text color="red">{errors.video.message}</Text>}
+          </YStack>
+          <YStack>
+            <Text fontSize="$2" marginBottom="$2">Tipo</Text>
+            <Controller
+              name="tipo"
+              control={control}
+              render={({ field }) => (
+                <Input
+                  placeholder="Tipo"
+                  {...field}
+                  style={{ borderColor: errors.tipo ? 'red' : 'black', borderWidth: 1 }}
+                />
+              )}
+            />
+            {errors.tipo && <Text color="red">{errors.tipo.message}</Text>}
+          </YStack>
+          <Spacer />
+
+          <Button onPress={handleSubmit(onSubmit)}>
+            Adicionar Aula
+          </Button>
+          {isError && (
+            <Text color="red">Erro ao adicionar aula.</Text>
+          )}
+        </YStack>
       </Container>
     </>
   );
