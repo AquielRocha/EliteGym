@@ -56,7 +56,7 @@ export default function ListarAulas() {
     return (
       <YStack padding="$4" flex={1} justifyContent="center" alignItems="center">
         <Text fontSize="$5" fontWeight="bold" marginBottom="$3">
-          Aulas da Academia
+          Aulas 
         </Text>
         <Text>Carregando...</Text>
       </YStack>
@@ -68,7 +68,7 @@ export default function ListarAulas() {
     return (
       <YStack padding="$4" flex={1} justifyContent="center" alignItems="center">
         <Text fontSize="$5" fontWeight="bold" marginBottom="$3">
-          Aulas da Academia
+          Aulas
         </Text>
         <Text>Erro ao carregar aulas</Text>
       </YStack>
@@ -81,7 +81,7 @@ export default function ListarAulas() {
     <YStack padding="$4" flex={1}>
       <YStack flexDirection="row" justifyContent="space-between" alignItems="center" marginBottom="$4">
         <Text fontSize="$5" fontWeight="bold">
-          Aulas da Academia
+          Aulas 
         </Text>
         <Button size="$3" onPress={() => refetch()} style={styles.iconButton}>
           <Ionicons name="reload-outline" size={24} color="black" />

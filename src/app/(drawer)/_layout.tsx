@@ -1,17 +1,24 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { Ionicons, MaterialIcons, FontAwesome6, FontAwesome5 } from '@expo/vector-icons';
+import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { Link } from 'expo-router';
 import { Drawer } from 'expo-router/drawer';
 
 const DrawerLayout: React.FC = () => (
-  <Drawer>
+  <Drawer
+    screenOptions={{
+      drawerActiveTintColor: '#4CAF50',
+      drawerInactiveTintColor: '#555',
+      headerStyle: { backgroundColor: '#f8f8f8' },
+      headerTintColor: '#000',
+    }}
+  >
     <Drawer.Screen
       name="index"
       options={{
         headerTitle: () => (
           <View style={styles.headerTitleContainer}>
-            <FontAwesome6 name="dumbbell" size={24} color="black" />
+            <MaterialIcons name="fitness-center" size={24} color="black" />
             <Text style={styles.headerTitleText}>EliteGym</Text>
           </View>
         ),
@@ -26,8 +33,8 @@ const DrawerLayout: React.FC = () => (
       options={{
         headerTitle: () => (
           <View style={styles.headerTitleContainer}>
-            <FontAwesome6 name="dumbbell" size={24} color="black" />
-            <Text style={styles.headerTitleText}>EliteGym</Text>
+            <Ionicons name="settings-outline" size={24} color="black" />
+            <Text style={styles.headerTitleText}>Opções</Text>
           </View>
         ),
         drawerLabel: 'Opções',
@@ -46,13 +53,13 @@ const DrawerLayout: React.FC = () => (
       options={{
         headerTitle: () => (
           <View style={styles.headerTitleContainer}>
-            <FontAwesome6 name="dumbbell" size={24} color="black" />
-            <Text style={styles.headerTitleText}>EliteGym</Text>
+            <MaterialIcons name="fitness-center" size={24} color="black" />
+            <Text style={styles.headerTitleText}>Aparelhos</Text>
           </View>
         ),
         drawerLabel: 'Aparelhos',
         drawerIcon: ({ size, color }) => (
-          <FontAwesome5 name="dumbbell" size={size} color={color} />
+          <MaterialIcons name="fitness-center" size={size} color={color} />
         ),
         headerRight: () => (
           <Link href="/info/aparelhos" asChild>
@@ -66,13 +73,13 @@ const DrawerLayout: React.FC = () => (
       options={{
         headerTitle: () => (
           <View style={styles.headerTitleContainer}>
-            <FontAwesome6 name="dumbbell" size={24} color="black" />
-            <Text style={styles.headerTitleText}>EliteGym</Text>
+            <MaterialIcons name="event-note" size={24} color="black" />
+            <Text style={styles.headerTitleText}>Aulas</Text>
           </View>
         ),
         drawerLabel: 'Aulas',
         drawerIcon: ({ size, color }) => (
-          <MaterialIcons name="event" size={size} color={color} />
+          <MaterialIcons name="event-note" size={size} color={color} />
         ),
         headerRight: () => (
           <Link href="/info/aulas" asChild>
@@ -86,11 +93,11 @@ const DrawerLayout: React.FC = () => (
       options={{
         headerTitle: () => (
           <View style={styles.headerTitleContainer}>
-            <FontAwesome6 name="dumbbell" size={24} color="black" />
-            <Text style={styles.headerTitleText}>EliteGym</Text>
+            <Ionicons name="people-outline" size={24} color="black" />
+            <Text style={styles.headerTitleText}>Usuários</Text>
           </View>
         ),
-        drawerLabel: 'Usuários/Alunos',
+        drawerLabel: 'Usuários',
         drawerIcon: ({ size, color }) => (
           <Ionicons name="people-outline" size={size} color={color} />
         ),
@@ -101,14 +108,33 @@ const DrawerLayout: React.FC = () => (
         ),
       }}
     />
-
+    <Drawer.Screen
+      name="(alunos)"
+      options={{
+        headerTitle: () => (
+          <View style={styles.headerTitleContainer}>
+            <Ionicons name="school-outline" size={24} color="black" />
+            <Text style={styles.headerTitleText}>Alunos</Text>
+          </View>
+        ),
+        drawerLabel: 'Alunos',
+        drawerIcon: ({ size, color }) => (
+          <Ionicons name="school-outline" size={size} color={color} />
+        ),
+        headerRight: () => (
+          <Link href="/info/alunos" asChild>
+            <Ionicons name="information-circle-outline" size={24} color="black" />
+          </Link>
+        ),
+      }}
+    />
     <Drawer.Screen
       name="(financeiro)"
       options={{
         headerTitle: () => (
           <View style={styles.headerTitleContainer}>
-            <FontAwesome6 name="dumbbell" size={24} color="black" />
-            <Text style={styles.headerTitleText}>EliteGym</Text>
+            <MaterialIcons name="attach-money" size={24} color="black" />
+            <Text style={styles.headerTitleText}>Financeiro</Text>
           </View>
         ),
         drawerLabel: 'Financeiro',
@@ -122,7 +148,6 @@ const DrawerLayout: React.FC = () => (
         ),
       }}
     />
-
   </Drawer>
 );
 

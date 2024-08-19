@@ -48,6 +48,7 @@ export default function RootLayout() {
             <Stack.Screen name="info/aparelhos" options={{ title: 'Detalhes da página', presentation: 'modal' }} />
             <Stack.Screen name="info/financeiro" options={{ title: 'Detalhes da página', presentation: 'modal' }} />
             <Stack.Screen name="info/usuarios" options={{ title: 'Detalhes da página', presentation: 'modal' }} />
+            <Stack.Screen name="info/alunos" options={{ title: 'Detalhes dos Alunosss', presentation: 'modal' }} />
           </Stack>
         </GestureHandlerRootView>
       </QueryClientProvider>

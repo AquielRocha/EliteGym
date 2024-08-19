@@ -15,8 +15,8 @@ const LandingPage = () => {
   const goToRegister = () => {
     router.push('/register'); // Navega para a tela de registro
   };
-  const goToAulas = () => {
-    router.push('/(aula)/Aulas'); // Navega para a tela de registro
+  const goToHome = () => {
+    router.push('/(drawer)'); // Navega para a tela de registro
   };
 
   return (
@@ -48,12 +48,12 @@ const LandingPage = () => {
           <Text style={styles.buttonText}>Register</Text>
         </Button>
         <Button
-          onPress={goToAulas}
+          onPress={goToHome}
           style={styles.button}
           size="$9"
         >
           <FontAwesome5 name="user" size={20} color="white" />
-          <Text style={styles.buttonText}>Aulas PRA FACILITAR MINHA VIDA</Text>
+          <Text style={styles.buttonText}>HOMEEEE PRA FACILITAR MINHA VIDA</Text>
         </Button>
       </View>
       <View style={styles.imageContainer}>
