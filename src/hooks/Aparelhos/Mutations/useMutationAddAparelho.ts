@@ -7,6 +7,7 @@ interface Aparelho {
   nome: string;
   descricao: string;
   foto: string;
+  categoria: string;
   manutencao: string;
 }
 

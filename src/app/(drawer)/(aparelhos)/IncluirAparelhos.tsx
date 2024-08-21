@@ -1,5 +1,4 @@
 import React from 'react';
-import RNPickerSelect from 'react-native-picker-select';
 import { Stack } from 'expo-router';
 import { Container } from '~/components/Container';
 import { YStack, Input, Button, Text, Spacer } from 'tamagui';
@@ -10,6 +9,7 @@ import { z } from 'zod';
 import aparelhoSchema from '~/src/Interfaces/ZodSchemaAparelhos';
 import { useMutationAddAparelhos } from '~/src/hooks/Aparelhos/Mutations/useMutationAddAparelho';
 import MaintenanceSelect from '~/components/Select';
+import CustomSelect from '~/components/CustomSelect';
 
 // Define the form data type
 type FormData = z.infer<typeof aparelhoSchema>;
@@ -25,7 +25,7 @@ const IncluirAparelhos = () => {
     //@ts-ignore
     addAparelho(data, {
       onSuccess: () => {
-        reset(); // Clear the form fields
+        reset();
         Alert.alert('Sucesso', 'Aparelho adicionado com sucesso!');
       },
       onError: () => {
@@ -33,6 +33,13 @@ const IncluirAparelhos = () => {
       },
     });
   };
+
+  const categoryItems = [
+    { label: 'Braços', value: 'braços' },
+    { label: 'Pernas', value: 'pernas' },
+    { label: 'Costas', value: 'costas' },
+    { label: 'Outros', value: 'outros' },
+  ];
 
   return (
     <>
@@ -92,11 +99,26 @@ const IncluirAparelhos = () => {
           </YStack>
           <YStack>
             <Controller
+              name="categoria"
+              control={control}
+              render={({ field: { onChange, value } }) => (
+                <CustomSelect
+                  value={value || ''}
+                  onValueChange={onChange}
+                  items={categoryItems}
+                  placeholder={{ label: 'Selecione a categoria', value: '' }}
+                />
+              )}
+            />
+            {errors.categoria && <Text color="red">{errors.categoria.message}</Text>}
+          </YStack>
+          <YStack>
+            <Controller
               name="manutencao"
               control={control}
               render={({ field: { onChange, value } }) => (
                 <MaintenanceSelect
-                  value={value}
+                  value={value || false}
                   onValueChange={onChange}
                 />
               )}
