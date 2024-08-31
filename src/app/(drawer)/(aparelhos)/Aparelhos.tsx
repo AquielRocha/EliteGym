@@ -15,7 +15,7 @@ interface Aparelho {
   descricao: string;
   foto: string;
   manutencao: boolean;
-  categoria: 'braços' | 'pernas' | 'costas' | 'outros';
+  categoria: string;
 }
 
 export default function ListarAparelhos() {

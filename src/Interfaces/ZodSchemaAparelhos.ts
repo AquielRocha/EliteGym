@@ -5,7 +5,7 @@ const aparelhoSchema = z.object({
   descricao: z.string().min(1, 'Descrição é obrigatória'),
   foto: z.string().min(1, 'Foto é obrigatória'),
   manutencao: z.boolean().optional(),
-  categoria: z.enum(['braços', 'pernas', 'costas', 'outros']),
+  categoria: z.string(),
 });
 
 export default aparelhoSchema;
