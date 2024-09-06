@@ -1,4 +1,4 @@
-import { Feather, Ionicons } from '@expo/vector-icons';
+import { Feather, Ionicons, Entypo } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
 
 export default function AparelhoLayout() {
@@ -28,6 +28,17 @@ export default function AparelhoLayout() {
           ),
         }}
       />
+
+      <Tabs.Screen
+        name="FavoriteAparelhos"
+        options={{
+          title: 'Aparelhos Favoritos',
+          tabBarIcon: ({ color }) => (
+            <Entypo name="heart-outlined" size={24} color={color} />
+          ),
+        }}
+      />
+
     </Tabs>
   );
 }

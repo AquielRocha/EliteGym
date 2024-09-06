@@ -3,6 +3,7 @@ import { ScrollView, View, StyleSheet, Alert, LayoutAnimation, UIManager, Platfo
 import { Button, Text, YStack, Input } from 'tamagui';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import Feather from '@expo/vector-icons/Feather';
+import AntDesign from '@expo/vector-icons/AntDesign'; // Novo ícone
 import CardAparelho from './CardAparelho';
 import CustomSelect from '~/components/CustomSelect';
 import { useQueryGetAllAparelhos } from '~/src/hooks/Aparelhos/useQueryGetAllAparelhos';
@@ -26,11 +27,12 @@ export default function ListarAparelhos() {
   const [editing, setEditing] = useState<Aparelho | null>(null);
   const [editedAparelho, setEditedAparelho] = useState<Aparelho | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<'braços' | 'pernas' | 'costas' | 'outros' | 'todos'>('todos');
+  const [favoriteAparelhos, setFavoriteAparelhos] = useState<number[]>([]); // Novo estado para favoritos
 
   const [index, setIndex] = useState(0);
   const [routes] = useState([
     { key: 'all', title: 'Todos' },
-    { key: 'maintenance', title: 'Manutenção' }
+    { key: 'maintenance', title: 'Manutenção' },
   ]);
 
   if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
@@ -74,24 +76,11 @@ export default function ListarAparelhos() {
     }
   };
 
-  if (isLoading) {
-    return (
-      <YStack padding="$4" flex={1} justifyContent="center" alignItems="center">
-        <Text fontSize="$5" fontWeight="bold" color="#333" marginBottom="$3">Aparelhos</Text>
-        <Text>Carregando...</Text>
-      </YStack>
+  const toggleFavorite = (id: number) => {
+    setFavoriteAparelhos((prevFavorites) =>
+      prevFavorites.includes(id) ? prevFavorites.filter((favId) => favId !== id) : [...prevFavorites, id]
     );
-  }
-
-  if (error) {
-    console.error('Erro ao carregar aparelhos:', error);
-    return (
-      <YStack padding="$4" flex={1} justifyContent="center" alignItems="center">
-        <Text fontSize="$5" fontWeight="bold" color="#333" marginBottom="$3">Aparelhos</Text>
-        <Text color="red">Erro ao carregar aparelhos</Text>
-      </YStack>
-    );
-  }
+  };
 
   const aparelhos: Aparelho[] = data || [];
   const filteredAparelhos = selectedCategory === 'todos' 
@@ -99,6 +88,9 @@ export default function ListarAparelhos() {
     : aparelhos.filter((aparelho) => aparelho.categoria === selectedCategory && !aparelho.manutencao);
 
   const aparelhosEmManutencao = aparelhos.filter(aparelho => aparelho.manutencao);
+
+  // Filtragem para a página de favoritos
+  const favoriteAparelhosList = aparelhos.filter(aparelho => favoriteAparelhos.includes(aparelho.id));
 
   const renderAparelhosGrid = (items: Aparelho[]) => (
     <ScrollView contentContainerStyle={styles.gridContainer}>
@@ -152,6 +144,8 @@ export default function ListarAparelhos() {
               Aparelho={aparelho}
               onEdit={() => handleEdit(aparelho)}
               onDelete={() => handleDelete(aparelho.id)}
+              onFavorite={() => toggleFavorite(aparelho.id)} // Adiciona a função de favoritos
+              isFavorite={favoriteAparelhos.includes(aparelho.id)} // Passa se é favorito ou não
             />
           )}
         </Animated.View>
@@ -183,7 +177,6 @@ export default function ListarAparelhos() {
         />
       </View>
 
-      {/* Tab View */}
       <TabView
         navigationState={{ index, routes }}
         renderScene={SceneMap({
@@ -191,6 +184,7 @@ export default function ListarAparelhos() {
           maintenance: () => renderAparelhosGrid(aparelhosEmManutencao),
         })}
         onIndexChange={setIndex}
+        initialLayout={{ width: 100 }}
       />
     </YStack>
   );
@@ -201,37 +195,30 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
+    padding: 10,
   },
   card: {
-    width: '100%',
+    width: '48%',
     marginBottom: 15,
-    marginTop: 15,
+  },
+  selectContainer: {
+    marginBottom: 20,
+  },
+  iconButton: {
     padding: 10,
-    borderRadius: 10,
-    backgroundColor: '#f9f9f9',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 5,
-    elevation: 5,
+    borderRadius: 50,
   },
   inputContainer: {
     marginBottom: 10,
   },
   label: {
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  selectContainer: {
-    marginBottom: 10,
-  },
-  iconButton: {
-    backgroundColor: 'transparent',
+    marginBottom: 5,
+    color: '#333',
   },
   saveButton: {
-    backgroundColor: 'green',
+    backgroundColor: '#28a745',
   },
   cancelButton: {
-    backgroundColor: 'red',
+    backgroundColor: '#dc3545',
   },
 });

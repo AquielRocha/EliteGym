@@ -1,8 +1,9 @@
 import React from 'react';
-import { View, StyleSheet, Image, Text } from 'react-native';
+import { View, StyleSheet, Image, Text, TouchableOpacity } from 'react-native';
 import { Button, YStack } from 'tamagui';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import AntDesign from '@expo/vector-icons/AntDesign'; // Ícone do coração
 import InfoCard from '~/components/InfoCard';
 
 interface Aparelho {
@@ -18,9 +19,11 @@ interface CardAparelhoProps {
   Aparelho: Aparelho;
   onEdit: () => void;
   onDelete: () => void;
+  onFavorite: () => void; // Prop para favoritar
+  isFavorite: boolean; // Prop para saber se é favorito
 }
 
-const CardAparelho: React.FC<CardAparelhoProps> = ({ Aparelho, onEdit, onDelete }) => {
+const CardAparelho: React.FC<CardAparelhoProps> = ({ Aparelho, onEdit, onDelete, onFavorite, isFavorite }) => {
   console.log('Aparelho:', Aparelho); // Verifique os dados
 
   return (
@@ -48,6 +51,9 @@ const CardAparelho: React.FC<CardAparelhoProps> = ({ Aparelho, onEdit, onDelete 
         <Button onPress={onDelete} size="$3" style={styles.iconButton}>
           <MaterialIcons name="delete-outline" size={24} color="black" />
         </Button>
+        <TouchableOpacity onPress={onFavorite} style={styles.iconButton}>
+          <AntDesign name={isFavorite ? "heart" : "hearto"} size={24} color="red" />
+        </TouchableOpacity>
       </View>
     </YStack>
   );
@@ -78,8 +84,6 @@ const styles = StyleSheet.create({
   iconButton: {
     marginLeft: 8,
     backgroundColor: 'transparent',
-    borderWidth: 1,
-    borderColor: 'black',
     borderRadius: 8,
     padding: 4,
   },
