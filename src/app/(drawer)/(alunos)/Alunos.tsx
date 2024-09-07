@@ -3,19 +3,26 @@ import { ScrollView, StyleSheet, Pressable, View } from 'react-native';
 import { Button, Text, YStack, Image } from 'tamagui';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useQueryGetAllAlunos } from '~/src/hooks/Alunos/useQueryGetAllAlunos';
-import { Aluno } from "~/src/hooks/Alunos/useQueryGetAllAlunos"; // Substitua pelo caminho real do seu arquivo de tipos
+import { Aluno } from '~/src/hooks/Alunos/useQueryGetAllAlunos';
 import AlunoModal from '../../../../components/AlunosComponents/ModalAlunos';
-import AddAlunoForm from '~/components/AlunosComponents/AlunosForm';
+import { useNavigation } from '@react-navigation/native';
 
 export default function AlunosList() {
   const { data, error, isLoading, refetch } = useQueryGetAllAlunos();
   const [selectedAluno, setSelectedAluno] = useState<Aluno | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
-  const [showForm, setShowForm] = useState(false); // Novo estado para controlar a exibição do formulário
+
+  const navigation = useNavigation();
 
   const handleAlunoPress = (aluno: Aluno) => {
     setSelectedAluno(aluno);
     setModalVisible(true);
+  };
+
+  const handleAddAlunoPress = () => {
+    // Navega para a tela de adicionar aluno
+    //@ts-ignore
+    navigation.navigate('addAlunos');
   };
 
   if (isLoading) {
@@ -41,26 +48,16 @@ export default function AlunosList() {
   return (
     <YStack padding="$4" flex={1}>
       <YStack flexDirection="row" justifyContent="space-between" alignItems="center" marginBottom="$4">
-        <Text fontSize="$5" fontWeight="bold">
-          Alunos
-        </Text>
-        <Button
-        onPress={() => setShowForm(true)}
-        style={{
-          backgroundColor: 'white', 
-          padding: 10,
-          borderRadius: 5,
-          flexDirection: 'row',
-          alignItems: 'center',
-        }}
-      >
-        <Ionicons name="add-outline" size={24} color="black" />
-        <Text style={{ color: 'white', marginLeft: 5 }}>Adicionar Aluno</Text>
-      </Button>
+        <Text fontSize="$5" fontWeight="bold">Alunos</Text>
+        <Button onPress={handleAddAlunoPress} style={styles.addButton}>
+          <Ionicons name="add-outline" size={24} color="black" />
+          <Text style={styles.addButtonText}>Adicionar Aluno</Text>
+        </Button>
         <Button onPress={() => refetch()}>
           <Ionicons name="reload-outline" size={24} color="white" />
         </Button>
       </YStack>
+
       <ScrollView>
         {data && data.map((aluno: Aluno) => (
           <Pressable key={aluno.id} onPress={() => handleAlunoPress(aluno)}>
@@ -83,59 +80,23 @@ export default function AlunosList() {
         aluno={selectedAluno}
         onClose={() => {
           setModalVisible(false);
-          setSelectedAluno(null); // Opcional: Limpar a seleção ao fechar o modal
+          setSelectedAluno(null); // Limpa a seleção ao fechar o modal
         }}
       />
-
-      {/* Modal for adding new aluno */}
-      {showForm && (
-        <View style={styles.modalOverlay}>
-          <View style={styles.modalContent}>
-            <AddAlunoForm />
-            <Button      style={{
-          backgroundColor: 'red', 
-          padding: 10,
-          borderRadius: 5,
-          flexDirection: 'row',
-          alignItems: 'center',
-        }}
-        onPress={() => setShowForm(false)}  >
-          Sair</Button>
-          </View>
-        </View>
-      )}
     </YStack>
   );
 }
 
 const styles = StyleSheet.create({
-  alunoCard: {
-    padding: 16,
-    borderWidth: 1,
-    marginBottom: 16,
-    borderRadius: 8,
-    backgroundColor: '#f1f1f1',
-  },
-  alunoImage: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-  },
-  modalOverlay: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    justifyContent: 'center',
+  addButton: {
+    backgroundColor: 'white',
+    padding: 10,
+    borderRadius: 5,
+    flexDirection: 'row',
     alignItems: 'center',
   },
-  modalContent: {
-    backgroundColor: 'white',
-    padding: 20,
-    borderRadius: 10,
-    width: '80%',
-    maxWidth: 600,
+  addButtonText: {
+    color: 'black',
+    marginLeft: 5,
   },
 });

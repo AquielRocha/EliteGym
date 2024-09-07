@@ -8,7 +8,7 @@ export interface NovoAluno {
     email: string;
     foto: string; 
     tipo: string;
-    dataNascimento: string;
+    dataNascimento: Date;
     telefone: string;
     objetivos: string;
     tipoPlano: string;
