@@ -4,7 +4,7 @@ import { Button, Text, YStack, Input } from 'tamagui';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useQueryGetAll } from '~/src/hooks/Aulas/useQuerygetAllAulas';
 import { useDeleteAula, useEditAula } from '~/src/hooks/Aulas/Mutations/useMutationeditAula';
-import CardAula from './Components/CardAula';
+import CardAula from '~/components/AulaComponents/CardAula';
 
 interface Aula {
   id: number;

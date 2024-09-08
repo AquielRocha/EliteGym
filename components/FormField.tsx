@@ -1,19 +1,50 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { FloatingLabelInput } from 'react-native-floating-label-input';
 import { TextInputMask } from 'react-native-masked-text';
 
 const FormField = ({
+  //@ts-ignore
   label,
+  //@ts-ignore
   value,
+  //@ts-ignore
   onChangeText,
   containerStyle = {},
   labelStyle = {},
-  maskType = null, // Valor padrão para maskType
+  maskType = null, 
   ...props
 }) => {
+  const commonStyles = StyleSheet.create({
+    container: {
+      marginVertical: 2,
+      alignItems: 'center',
+      width: '50%',
+    },
+    inputContainer: {
+      borderWidth: 1,
+      paddingHorizontal: 10,
+      backgroundColor: '#fff',
+      borderColor: '#B0C4DE',
+      borderRadius: 8,
+    },
+    input: {
+      color: 'black',
+      paddingHorizontal: 10,
+      paddingVertical: 15,
+    },
+    labelFocused: {
+      color: '#708090', 
+      fontSize: 12,
+    },
+    labelBlurred: {
+      color: '#708090', 
+      fontSize: 18,
+    },
+  });
+
   return (
-    <View style={containerStyle}>
+    <View style={[commonStyles.container, containerStyle]}>
       {maskType ? (
         <TextInputMask
           type={maskType}
@@ -22,19 +53,15 @@ const FormField = ({
           customTextInput={FloatingLabelInput}
           customTextInputProps={{
             label,
-            containerStyles: {
-              borderBottomWidth: 1,
-              borderColor: '#000',
-              paddingVertical: 12,
-              backgroundColor: 'white',
-              borderRadius: 10,
-            },
+            containerStyles: commonStyles.inputContainer,
             customLabelStyles: {
-              colorFocused: '#000',
-              colorBlurred: '#aaa',
-              fontSizeFocused: 14,
-              fontSizeBlurred: 16,
+              colorFocused: commonStyles.labelFocused.color,
+              colorBlurred: commonStyles.labelBlurred.color,
+              fontSizeFocused: commonStyles.labelFocused.fontSize,
+              fontSizeBlurred: commonStyles.labelBlurred.fontSize,
+              ...labelStyle,
             },
+            inputStyles: commonStyles.input,
             ...props,
           }}
         />
@@ -43,21 +70,15 @@ const FormField = ({
           label={label}
           value={value}
           onChangeText={onChangeText}
-          containerStyles={{
-            borderBottomWidth: 1,
-            borderColor: '#000',
-            paddingVertical: 12,
-            backgroundColor: 'white',
-            borderRadius: 10,
-            ...containerStyle,
-          }}
+          containerStyles={commonStyles.inputContainer}
           customLabelStyles={{
-            colorFocused: '#000',
-            colorBlurred: '#aaa',
-            fontSizeFocused: 14,
-            fontSizeBlurred: 16,
+            colorFocused: commonStyles.labelFocused.color,
+            colorBlurred: commonStyles.labelBlurred.color,
+            fontSizeFocused: commonStyles.labelFocused.fontSize,
+            fontSizeBlurred: commonStyles.labelBlurred.fontSize,
             ...labelStyle,
           }}
+          inputStyles={commonStyles.input}
           {...props}
         />
       )}
