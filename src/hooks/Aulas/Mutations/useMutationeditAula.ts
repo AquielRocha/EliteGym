@@ -1,8 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
+import { API_BASE_URL } from '~/config';
 
-// URL base da sua API
-const API_BASE_URL = 'http://10.0.2.2:5288/api/'; // Ajuste conforme necessário
 
 // Tipo dos dados da aula
 interface Aula {

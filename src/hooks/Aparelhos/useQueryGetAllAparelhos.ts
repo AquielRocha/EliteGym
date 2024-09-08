@@ -1,8 +1,8 @@
 
 import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
+import { API_BASE_URL } from '~/config';
 
-const API_BASE_URL = 'http://10.0.2.2:5288/api/';
 
 const fetchAparelhos = async () => {
     const response = await axios.get(`${API_BASE_URL}Aparelhos/getAll`);
