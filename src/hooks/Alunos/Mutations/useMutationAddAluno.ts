@@ -1,14 +1,14 @@
 import axios from 'axios';
 import { useMutation } from '@tanstack/react-query';
+import { API_BASE_URL } from '~/config';
 
-const API_BASE_URL = 'http://10.0.2.2:5288/api/';
 
 export interface NovoAluno {
     nome: string;
     email: string;
     foto: string; 
     tipo: string;
-    dataNascimento: string;
+    dataNascimento: Date;
     telefone: string;
     objetivos: string;
     tipoPlano: string;

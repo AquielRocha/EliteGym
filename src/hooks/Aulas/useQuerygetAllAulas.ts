@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
+import { API_BASE_URL } from '~/config';
 
 
-const API_BASE_URL = 'http://10.0.2.2:5288/api/'; 
 
 
 const fetchAulas = async () => {

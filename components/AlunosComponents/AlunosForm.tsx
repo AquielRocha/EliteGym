@@ -1,171 +1,312 @@
-import React, { useState } from 'react';
-import { View, TextInput, Button, Text, ScrollView, TouchableOpacity, Alert } from 'react-native';
-import { useMutationAddAluno } from '~/src/hooks/Alunos/Mutations/useMutationAddAluno';
-import { Ionicons } from '@expo/vector-icons';
+// import React from 'react';
+// import { View, ScrollView, Alert } from 'react-native';
+// import { useForm, Controller } from 'react-hook-form';
+// import { Button, Input, Label, Switch, XStack, YStack } from 'tamagui';
+// import { useMutationAddAluno } from '~/src/hooks/Alunos/Mutations/useMutationAddAluno';
+// import {FloatingLabelInput} from 'react-native-floating-label-input';
 
-interface Endereco {
-  rua: string;
-  numero: string;
-  complemento: string;
-  bairro: string;
-  cidade: string;
-  estado: string;
-  codigoPostal: string;
-  pais: string;
-}
+// interface Endereco {
+//   rua: string;
+//   numero: string;
+//   complemento: string;
+//   bairro: string;
+//   cidade: string;
+//   estado: string;
+//   codigoPostal: string;
+//   pais: string;
+// }
 
-interface AlunoFormData {
-  nome: string;
-  email: string;
-  foto: string;
-  tipo: string;
-  dataNascimento: string;
-  telefone: string;
-  objetivos: string;
-  tipoPlano: string;
-  statusPagamento: string;
-  informacoesMedicas: string;
-  preferenciasTreino: string;
-  ativo: boolean;
-  aula: any;
-  enderecos: Endereco[];
-}
+// interface AlunoFormData {
+//   nome: string;
+//   email: string;
+//   foto: string;
+//   tipo: string;
+//   dataNascimento: string;
+//   telefone: string;
+//   objetivos: string;
+//   tipoPlano: string;
+//   statusPagamento: string;
+//   informacoesMedicas: string;
+//   preferenciasTreino: string;
+//   ativo: boolean;
+//   enderecos?: Endereco[];
+// }
 
-const AddAlunoForm = () => {
-  const { mutate } = useMutationAddAluno();
-  const [formData, setFormData] = useState<AlunoFormData>({
-    nome: '',
-    email: '',
-    foto: '',
-    tipo: '',
-    dataNascimento: '',
-    telefone: '',
-    aula: 1,
-    objetivos: '',
-    tipoPlano: '',
-    statusPagamento: '',
-    informacoesMedicas: '',
-    preferenciasTreino: '',
-    ativo: true,
-    enderecos: [{ rua: '', numero: '', complemento: '', bairro: '', cidade: '', estado: '', codigoPostal: '', pais: '' }],
-  });
+// const AddAlunoForm = () => {
+//   const { control, handleSubmit, reset } = useForm<AlunoFormData>({
+//     defaultValues: {
+//       nome: '',
+//       email: '',
+//       foto: '',
+//       tipo: '',
+//       dataNascimento: '',
+//       telefone: '',
+//       objetivos: '',
+//       tipoPlano: '',
+//       statusPagamento: '',
+//       informacoesMedicas: '',
+//       preferenciasTreino: '',
+//       ativo: true,
+//       enderecos: [],
+//     },
+//   });
 
-  const handleChange = (field: keyof AlunoFormData, value: string) => {
-    setFormData({ ...formData, [field]: value });
-  };
+//   const { mutate } = useMutationAddAluno();
 
-  const handleEnderecoChange = (index: number, field: keyof Endereco, value: string) => {
-    const newEnderecos = [...formData.enderecos];
-    newEnderecos[index][field] = value;
-    setFormData({ ...formData, enderecos: newEnderecos });
-  };
+//   const onSubmit = (data: AlunoFormData) => {
+//     //@ts-ignore
+//     mutate(data, {
+//       onSuccess: () => {
+//         Alert.alert('Success', 'Aluno added successfully');
+//         reset(); // Limpa o formulário após o sucesso
+//       },
+//       onError: (error) => {
+//         Alert.alert('Error', 'Failed to add aluno');
+//       },
+//     });
+//   };
 
-  const addEndereco = () => {
-    setFormData({
-      ...formData,
-      enderecos: [...formData.enderecos, { rua: '', numero: '', complemento: '', bairro: '', cidade: '', estado: '', codigoPostal: '', pais: '' }],
-    });
-  };
+//   return (
+//     <ScrollView style={styles.container}>
+//       <View>
+//         <YStack padding="$2" minWidth={300} space="$3">
+//         <Controller
+//           control={control}
+//           name="nome"
+//           render={({ field }) => (
+//             <FloatingLabelInput
+//               label="Nome"
+//               value={field.value}
+//               onChangeText={field.onChange}
+//               containerStyles={{
+//                 borderBottomWidth: 1,
+//                 borderColor: '#000',
+//                 paddingVertical: 10,
+//               }}
+//               customLabelStyles={{
+//                 colorFocused: '#000',
+//                 colorBlurred: '#aaa',
+//                 fontSizeFocused: 12,
+//                 fontSizeBlurred: 16,
+//               }}
+//             />
+//           )}
+//         />
 
-  const removeEndereco = (index: number) => {
-    setFormData({
-      ...formData,
-      enderecos: formData.enderecos.filter((_, i) => i !== index),
-    });
-  };
+//           <Controller
+//             control={control}
+//             name="email"
+//             render={({ field }) => (
+//               <XStack alignItems="center" space="$1">
+//                 <Label width={50} color={'black'}>
+//                   Email
+//                 </Label>
+//                 <Input
+//                   flex={1}
+//                   value={field.value}
+//                   color={'black'}
+//                   backgroundColor={'white'}
+//                   onChangeText={field.onChange}
+//                   placeholder="Email"
+//                 />
+//               </XStack>
+//             )}
+//           />
 
-  const handleSubmit = () => {
-    mutate(formData, {
-      onSuccess: () => {
-        Alert.alert('Sucesso', 'Aluno adicionado com sucesso!');
-      },
-      onError: (error) => {
-        Alert.alert('Erro', `Não foi possível adicionar o aluno. Erro: ${error.message}`);
-      },
-    });
-  };
+//           <Controller
+//             control={control}
+//             name="tipo"
+//             render={({ field }) => (
+//               <XStack alignItems="center" space="$1">
+//                 <Label width={50} color={'black'}>
+//                   Tipo
+//                 </Label>
+//                 <Input
+//                   flex={1}
+//                   value={field.value}
+//                   color={'black'}
+//                   backgroundColor={'white'}
+//                   onChangeText={field.onChange}
+//                   placeholder="Tipo"
+//                 />
+//               </XStack>
+//             )}
+//           />
 
-  return (
-    <ScrollView style={styles.container}>
-      <InputField placeholder="Nome" value={formData.nome} onChangeText={(value) => handleChange('nome', value)} />
-      <InputField placeholder="Email" value={formData.email} onChangeText={(value) => handleChange('email', value)} />
-      <InputField placeholder="Foto" value={formData.foto} onChangeText={(value) => handleChange('foto', value)} />
-      <InputField placeholder="Tipo" value={formData.tipo} onChangeText={(value) => handleChange('tipo', value)} />
-      <InputField placeholder="Data de Nascimento (YYYY-MM-DD)" value={formData.dataNascimento} onChangeText={(value) => handleChange('dataNascimento', value)} />
-      <InputField placeholder="Telefone" value={formData.telefone} onChangeText={(value) => handleChange('telefone', value)} />
-      <InputField placeholder="Objetivos" value={formData.objetivos} onChangeText={(value) => handleChange('objetivos', value)} />
-      <InputField placeholder="Tipo do Plano" value={formData.tipoPlano} onChangeText={(value) => handleChange('tipoPlano', value)} />
-      <InputField placeholder="Status do Pagamento" value={formData.statusPagamento} onChangeText={(value) => handleChange('statusPagamento', value)} />
-      <InputField placeholder="Informações Médicas" value={formData.informacoesMedicas} onChangeText={(value) => handleChange('informacoesMedicas', value)} />
-      <InputField placeholder="Preferências de Treino" value={formData.preferenciasTreino} onChangeText={(value) => handleChange('preferenciasTreino', value)} />
+//           <Controller
+//             control={control}
+//             name="dataNascimento"
+//             render={({ field }) => (
+//               <XStack alignItems="center" space="$1">
+//                 <Label width={50} color={'black'}>
+//                   Data Nascimento
+//                 </Label>
+//                 <Input
+//                   flex={1}
+//                   value={field.value}
+//                   color={'black'}
+//                   backgroundColor={'white'}
+//                   onChangeText={field.onChange}
+//                   placeholder="Data Nascimento"
+//                 />
+//               </XStack>
+//             )}
+//           />
 
-      {formData.enderecos.map((endereco, index) => (
-        <View key={index} style={styles.enderecoContainer}>
-          <Text>Endereço {index + 1}</Text>
-          {Object.keys(endereco).map((key) => (
-            <InputField
-              key={key}
-              placeholder={capitalizeFirstLetter(key)}
-              value={endereco[key as keyof Endereco]}
-              onChangeText={(value) => handleEnderecoChange(index, key as keyof Endereco, value)}
-            />
-          ))}
-          <TouchableOpacity onPress={() => removeEndereco(index)} style={styles.removeButton}>
-            <Text style={styles.removeButtonText}>Remover Endereço</Text>
-          </TouchableOpacity>
-        </View>
-      ))}
+//           <Controller
+//             control={control}
+//             name="telefone"
+//             render={({ field }) => (
+//               <XStack alignItems="center" space="$1">
+//                 <Label width={50} color={'black'}>
+//                   Telefone
+//                 </Label>
+//                 <Input
+//                   flex={1}
+//                   value={field.value}
+//                   color={'black'}
+//                   backgroundColor={'white'}
+//                   onChangeText={field.onChange}
+//                   placeholder="Telefone"
+//                 />
+//               </XStack>
+//             )}
+//           />
 
-      <Button title="Salvar Aluno" onPress={handleSubmit} />
-      <TouchableOpacity onPress={addEndereco} style={styles.addButton}>
-        <Ionicons name="add" size={24} color="black" />
-      </TouchableOpacity>
-    </ScrollView>
-  );
-};
+//           <Controller
+//             control={control}
+//             name="objetivos"
+//             render={({ field }) => (
+//               <XStack alignItems="center" space="$1">
+//                 <Label width={50} color={'black'}>
+//                   Objetivos
+//                 </Label>
+//                 <Input
+//                   flex={1}
+//                   value={field.value}
+//                   color={'black'}
+//                   backgroundColor={'white'}
+//                   onChangeText={field.onChange}
+//                   placeholder="Objetivos"
+//                 />
+//               </XStack>
+//             )}
+//           />
 
-const InputField = ({ placeholder, value, onChangeText }: { placeholder: string; value: string; onChangeText: (value: string) => void }) => (
-  <TextInput
-    placeholder={placeholder}
-    value={value}
-    onChangeText={onChangeText}
-    style={styles.input}
-  />
-);
+//           <Controller
+//             control={control}
+//             name="tipoPlano"
+//             render={({ field }) => (
+//               <XStack alignItems="center" space="$1">
+//                 <Label width={50} color={'black'}>
+//                   Tipo Plano
+//                 </Label>
+//                 <Input
+//                   flex={1}
+//                   value={field.value}
+//                   color={'black'}
+//                   backgroundColor={'white'}
+//                   onChangeText={field.onChange}
+//                   placeholder="Tipo Plano"
+//                 />
+//               </XStack>
+//             )}
+//           />
 
-const capitalizeFirstLetter = (string: string) => string.charAt(0).toUpperCase() + string.slice(1);
+//           <Controller
+//             control={control}
+//             name="statusPagamento"
+//             render={({ field }) => (
+//               <XStack alignItems="center" space="$1">
+//                 <Label width={50} color={'black'}>
+//                   Status Pagamento
+//                 </Label>
+//                 <Input
+//                   flex={1}
+//                   value={field.value}
+//                   color={'black'}
+//                   backgroundColor={'white'}
+//                   onChangeText={field.onChange}
+//                   placeholder="Status Pagamento"
+//                 />
+//               </XStack>
+//             )}
+//           />
 
-const styles = {
-  container: {
-    padding: 20,
-  },
-  input: {
-    height: 40,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    marginBottom: 10,
-    paddingHorizontal: 8,
-  },
-  enderecoContainer: {
-    marginBottom: 20,
-  },
-  removeButton: {
-    marginTop: 10,
-    padding: 10,
-    backgroundColor: 'red',
-    alignItems: 'center',
-    borderRadius: 5,
-  },
-  removeButtonText: {
-    color: 'white',
-  },
-  addButton: {
-    marginTop: 10,
-    padding: 10,
-    backgroundColor: 'lightgray',
-    alignItems: 'center',
-    borderRadius: 5,
-  },
-};
+//           <Controller
+//             control={control}
+//             name="informacoesMedicas"
+//             render={({ field }) => (
+//               <XStack alignItems="center" space="$1">
+//                 <Label width={50} color={'black'}>
+//                   Informações Médicas
+//                 </Label>
+//                 <Input
+//                   flex={1}
+//                   value={field.value}
+//                   color={'black'}
+//                   backgroundColor={'white'}
+//                   onChangeText={field.onChange}
+//                   placeholder="Informações Médicas"
+//                 />
+//               </XStack>
+//             )}
+//           />
 
-export default AddAlunoForm;
+//           <Controller
+//             control={control}
+//             name="preferenciasTreino"
+//             render={({ field }) => (
+//               <XStack alignItems="center" space="$1">
+//                 <Label width={50} color={'black'}>
+//                   Preferências Treino
+//                 </Label>
+//                 <Input
+//                   flex={1}
+//                   value={field.value}
+//                   color={'black'}
+//                   backgroundColor={'white'}
+//                   onChangeText={field.onChange}
+//                   placeholder="Preferências Treino"
+//                 />
+//               </XStack>
+//             )}
+//           />
+
+//           <Controller
+//             control={control}
+//             name="ativo"
+//             render={({ field }) => (
+//               <XStack alignItems="center" space="$1">
+//                 <Label width={50} color={'black'}>
+//                   Ativo
+//                 </Label>
+//                 <Switch
+//                   checked={field.value}
+//                   //@ts-ignore
+//                   onChange={() => field.onChange(!field.value)}
+//                   size="$3"
+//                   color="$primary"
+//                   borderWidth={2}
+//                   borderColor="$border"
+//                   backgroundColor={field.value ? '$success' : '$error'}
+//                   thumbColor={field.value ? '$successDark' : '$errorDark'}
+//                 />
+//               </XStack>
+//             )}
+//           />
+
+//           <Button onPress={handleSubmit(onSubmit)}>Submit</Button>
+//         </YStack>
+//       </View>
+//     </ScrollView>
+//   );
+// };
+
+// const styles = {
+//   container: {
+//     padding: 8,
+//    },
+// };
+
+// export default AddAlunoForm;

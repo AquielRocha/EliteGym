@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
+import { API_BASE_URL } from '~/config';
 
 // URL base da sua API
-const API_BASE_URL = 'http://10.0.2.2:5288/api/';
 
 // Tipo dos dados do aparelho
 interface Aparelho {
