@@ -30,7 +30,7 @@ export default function AparelhoLayout() {
       />
 
       <Tabs.Screen
-        name="FavoriteAparelhos"
+        name="AparelhosFavoritos"
         options={{
           title: 'Aparelhos Favoritos',
           tabBarIcon: ({ color }) => (
@@ -38,8 +38,6 @@ export default function AparelhoLayout() {
           ),
         }}
       />
-
     </Tabs>
   );
 }
-

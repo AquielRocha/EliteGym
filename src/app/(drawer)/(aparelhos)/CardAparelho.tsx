@@ -16,24 +16,24 @@ interface Aparelho {
 }
 
 interface CardAparelhoProps {
-  Aparelho: Aparelho;
+  aparelho: Aparelho;
   onEdit: () => void;
   onDelete: () => void;
   onFavorite: () => void; // Prop para favoritar
   isFavorite: boolean; // Prop para saber se é favorito
 }
 
-const CardAparelho: React.FC<CardAparelhoProps> = ({ Aparelho, onEdit, onDelete, onFavorite, isFavorite }) => {
-  console.log('Aparelho:', Aparelho); // Verifique os dados
+const CardAparelho: React.FC<CardAparelhoProps> = React.memo(({ aparelho, onEdit, onDelete, onFavorite, isFavorite }) => {
+  console.log('Renderizando Aparelho:', aparelho.id);
 
   return (
     <YStack padding="$4" space="$2" style={styles.cardContainer}>
-      <InfoCard title={Aparelho.nome} description={Aparelho.descricao} />
+      <InfoCard title={aparelho.nome} description={aparelho.descricao} />
       
-      {Aparelho.foto ? (
+      {aparelho.foto ? (
         <View style={styles.imageContainer}>
           <Image
-            source={{ uri: Aparelho.foto }}
+            source={{ uri: aparelho.foto }}
             style={styles.image}
             resizeMode="contain"
           />
@@ -57,7 +57,7 @@ const CardAparelho: React.FC<CardAparelhoProps> = ({ Aparelho, onEdit, onDelete,
       </View>
     </YStack>
   );
-};
+});
 
 const styles = StyleSheet.create({
   cardContainer: {

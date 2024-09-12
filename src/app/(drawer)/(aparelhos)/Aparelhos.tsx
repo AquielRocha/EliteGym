@@ -3,12 +3,13 @@ import { ScrollView, View, StyleSheet, Alert, LayoutAnimation, UIManager, Platfo
 import { Button, Text, YStack, Input } from 'tamagui';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import Feather from '@expo/vector-icons/Feather';
-import AntDesign from '@expo/vector-icons/AntDesign'; // Novo ícone
+import AntDesign from '@expo/vector-icons/AntDesign';
 import CardAparelho from './CardAparelho';
 import CustomSelect from '~/components/CustomSelect';
 import { useQueryGetAllAparelhos } from '~/src/hooks/Aparelhos/useQueryGetAllAparelhos';
 import { useDeleteAparelho, useEditAparelho } from '~/src/hooks/Aparelhos/Mutations/useMutationEditAparelho';
 import { TabView, SceneMap } from 'react-native-tab-view';
+import FavoriteAparelhos from '../../../../components/AparelhosComponents/FavoriteAparelhos';  // Import the favorite aparelhos component
 
 interface Aparelho {
   id: number;
@@ -27,12 +28,13 @@ export default function ListarAparelhos() {
   const [editing, setEditing] = useState<Aparelho | null>(null);
   const [editedAparelho, setEditedAparelho] = useState<Aparelho | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<'braços' | 'pernas' | 'costas' | 'outros' | 'todos'>('todos');
-  const [favoriteAparelhos, setFavoriteAparelhos] = useState<number[]>([]); // Novo estado para favoritos
+  const [favoriteAparelhos, setFavoriteAparelhos] = useState<number[]>([]);  // State for favorite aparelhos
 
   const [index, setIndex] = useState(0);
   const [routes] = useState([
     { key: 'all', title: 'Todos' },
     { key: 'maintenance', title: 'Manutenção' },
+    { key: 'favorites', title: 'Favoritos' },  // Add new tab for favorites
   ]);
 
   if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
@@ -141,11 +143,11 @@ export default function ListarAparelhos() {
             </YStack>
           ) : (
             <CardAparelho
-              Aparelho={aparelho}
+              aparelho={aparelho}
               onEdit={() => handleEdit(aparelho)}
               onDelete={() => handleDelete(aparelho.id)}
-              onFavorite={() => toggleFavorite(aparelho.id)} // Adiciona a função de favoritos
-              isFavorite={favoriteAparelhos.includes(aparelho.id)} // Passa se é favorito ou não
+              onFavorite={() => toggleFavorite(aparelho.id)}  // Favorite function
+              isFavorite={favoriteAparelhos.includes(aparelho.id)}  // Check if favorite
             />
           )}
         </Animated.View>
@@ -182,6 +184,7 @@ export default function ListarAparelhos() {
         renderScene={SceneMap({
           all: () => renderAparelhosGrid(filteredAparelhos),
           maintenance: () => renderAparelhosGrid(aparelhosEmManutencao),
+          favorites: () => <FavoriteAparelhos aparelhos={favoriteAparelhosList} />,  // Render favorite aparelhos
         })}
         onIndexChange={setIndex}
         initialLayout={{ width: 100 }}
@@ -198,7 +201,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   card: {
-    width: '48%',
+    width: '95%',
     marginBottom: 15,
   },
   selectContainer: {
