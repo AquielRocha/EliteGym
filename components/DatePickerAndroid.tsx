@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Platform, Button } from 'react-native';
+import { View, Platform, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 interface DatePickerAndroidProps {
@@ -20,13 +20,13 @@ const DatePickerAndroid: React.FC<DatePickerAndroidProps> = ({ value, onChange }
   const formattedDate = value.toLocaleDateString();
 
   return (
-    <View>
-      <Button
+    <View style={styles.container}>
+      <TouchableOpacity
         onPress={() => setShow(true)}
-        title={formattedDate}
-        color="black" 
-        
-        />
+        style={styles.button}
+      >
+        <Text style={styles.buttonText}>{formattedDate}</Text>
+      </TouchableOpacity>
       {show && (
         <DateTimePicker
           value={value}
@@ -38,5 +38,24 @@ const DatePickerAndroid: React.FC<DatePickerAndroidProps> = ({ value, onChange }
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    marginVertical: 10,
+    alignItems: 'center',
+  },
+  button: {
+    height: 40,
+    width: 150, // Ajuste a largura conforme necessário
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#333', // Cor de fundo
+    borderRadius: 5, // Cantos arredondados
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
+  },
+});
 
 export default DatePickerAndroid;

@@ -4,22 +4,18 @@ import { FloatingLabelInput } from 'react-native-floating-label-input';
 import { TextInputMask } from 'react-native-masked-text';
 
 const FormField = ({
-  //@ts-ignore
   label,
-  //@ts-ignore
   value,
-  //@ts-ignore
   onChangeText,
   containerStyle = {},
   labelStyle = {},
-  maskType = null, 
+  maskType = null,
   ...props
 }) => {
   const commonStyles = StyleSheet.create({
     container: {
-      marginVertical: 2,
-      alignItems: 'center',
-      width: '50%',
+      marginVertical: 10,
+      width: '70%', // Ajusta para preencher o espaço disponível
     },
     inputContainer: {
       borderWidth: 1,
@@ -29,16 +25,18 @@ const FormField = ({
       borderRadius: 8,
     },
     input: {
-      color: 'black',
+      height: 40,
+      
+      color: '#000',
       paddingHorizontal: 10,
-      paddingVertical: 15,
+      paddingVertical: 5,
     },
     labelFocused: {
-      color: '#708090', 
-      fontSize: 12,
+      color: '#708090',
+      fontSize: 10,
     },
     labelBlurred: {
-      color: '#708090', 
+      color: '#708090',
       fontSize: 18,
     },
   });
