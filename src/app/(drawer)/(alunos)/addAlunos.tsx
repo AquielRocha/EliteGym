@@ -81,257 +81,253 @@ const AddAlunoForm = () => {
   
       <ScrollView style={styles.scrollContainer}>
         <YStack padding="$4" space="$4">
-  
-          <View style={styles.selectRow}>
-            <View style={styles.selectColumn}>
-              <Controller
-                control={control}
-                name="nome"
-                render={({ field }) => (
-                  <FormField
-                    label="Nome"
+                  {/* Tipo de Usuário */}
+                  <View style={styles.selectColumn}>
+            <Controller
+              control={control}
+              name="tipo"
+              render={({ field }) => (
+                <View style={styles.fieldContainer}>
+                  <Label color={'black'}>Tipo de Usuário</Label>
+                  <SelectPicker
+                    items={[
+                      { label: 'Selecione o tipo de usuário', value: '' },
+                      { label: 'Aluno', value: 'aluno' },
+                      { label: 'Professor', value: 'professor' },
+                    ]}
+                    placeholder={{}}
                     value={field.value}
-                    onChangeText={field.onChange}
-                    containerStyle={styles.fieldContainer}
+                    onValueChange={field.onChange}
                   />
-                )}
-              />
-            </View>
-  
-            <View style={styles.selectColumn}>
-              <Controller
-                control={control}
-                name="email"
-                render={({ field }) => (
-                  <FormField
-                    label="Email"
-                    value={field.value}
-                    onChangeText={field.onChange}
-                    containerStyle={styles.fieldContainer}
-                  />
-                )}
-              />
-            </View>
+                </View>
+              )}
+            />
           </View>
-  
+          {/* Nome */}
           <View style={styles.selectColumn}>
-              <Controller
-                control={control}
-                name="foto"
-                render={({ field }) => (
-                  <FormField
-                    label="Foto (URL)"
-                    value={field.value}
-                    onChangeText={field.onChange}
-                    containerStyle={styles.fieldContainer}
-                  />
-                )}
-              />
-            </View>
+            <Controller
+              control={control}
+              name="nome"
+              render={({ field }) => (
+                <FormField
+                  label="Nome Completo"
+                  value={field.value}
+                  onChangeText={field.onChange}
+                  containerStyle={styles.fieldContainer}
+                />
+              )}
+            />
+          </View>
 
-            <View style={styles.selectColumn}>
-              <Controller
-                control={control}
-                name="dataNascimento"
-                render={({ field }) => (
-                  <View style={styles.fieldContainer}>
-                    <Label color="black">Data de Nascimento</Label>
-                    {Platform.OS === 'ios' ? (
-                      <DatePickerIOS
-                        value={field.value ? new Date(field.value) : new Date()}
-                        onChange={(event, selectedDate) => {
-                          setValue('dataNascimento', selectedDate?.toISOString() || field.value);
-                        }}
-                      />
-                    ) : (
-                      <DatePickerAndroid
-                        value={field.value ? new Date(field.value) : new Date()}
-                        onChange={(event, selectedDate) => {
-                          setValue('dataNascimento', selectedDate?.toISOString() || field.value);
-                        }}
-                      />
-                    )}
-                  </View>
-                )}
-              />
-            </View>
-          <View style={styles.selectRow}>
-          
-  
-            <View style={styles.selectColumn}>
-              <Controller
-                control={control}
-                name="tipo"
-                render={({ field }) => (
-                  <View style={styles.fieldContainer}>
-                    <Label color={'black'}>Tipo de Usuário</Label>
-                    <SelectPicker
-                      items={[
-                        { label: 'Selecione o tipo de usuário', value: '' },
-                        { label: 'Aluno', value: 'aluno' },
-                        { label: 'Professor', value: 'professor' },
-                      ]}
-                      placeholder={{}}
-                      value={field.value}
-                      onValueChange={field.onChange}
-                    />
-                  </View>
-                )}
-              />
-            </View>
+          {/* Email */}
+          <View style={styles.selectColumn}>
+            <Controller
+              control={control}
+              name="email"
+              render={({ field }) => (
+                <FormField
+                  label="E-mail"
+                  value={field.value}
+                  onChangeText={field.onChange}
+                  containerStyle={styles.fieldContainer}
+                />
+              )}
+            />
+          </View>
 
-            <View style={styles.selectColumn}>
-              <Controller
-                control={control}
-                name="preferenciasTreino"
-                render={({ field }) => (
-                  <View style={styles.fieldContainer}>
-                    <Label color={'black'}>Preferências de Treino</Label>
-                    <SelectPicker
-                      items={[
-                        { label: 'Selecione a preferência de treino', value: '' },
-                        { label: 'Hipertrofia', value: 'hipertrofia' },
-                        { label: 'Emagrecimento', value: 'emagrecimento' },
-                        { label: 'Resistência', value: 'resistencia' },
-                      ]}
-                      placeholder={{}}
-                      value={field.value}
-                      onValueChange={field.onChange}
-                    />
-                  </View>
-                )}
-              />
-            </View>
+          {/* Telefone */}
+          <View style={styles.selectColumn}>
+            <Controller
+              control={control}
+              name="telefone"
+              render={({ field }) => (
+                <FormField
+                  label="Celular/WhatsApp"
+                  value={field.value}
+                  onChangeText={field.onChange}
+                  maskType="cel-phone"
+                  customTextInputProps={{ placeholder: '(99) 99999-9999' }}
+                  containerStyle={styles.fieldContainer}
+                />
+              )}
+            />
           </View>
-  
-          <View style={styles.selectRow}>
-            <View style={styles.selectColumn}>
-              <Controller
-                control={control}
-                name="tipoPlano"
-                render={({ field }) => (
-                  <View style={styles.fieldContainer}>
-                    <Label color={'black'}>Tipo de Plano</Label>
-                    <SelectPicker
-                      items={[
-                        { label: 'Selecione o tipo de plano', value: '' },
-                        { label: 'Plano Mensal', value: 'mensal' },
-                        { label: 'Plano Trimestral', value: 'trimestral' },
-                        { label: 'Plano Anual', value: 'anual' },
-                      ]}
-                      placeholder={{}}
-                      value={field.value}
-                      onValueChange={field.onChange}
+
+          {/* Data de Nascimento */}
+          <View style={styles.selectColumn}>
+            <Controller
+              control={control}
+              name="dataNascimento"
+              render={({ field }) => (
+                <View style={styles.fieldContainer}>
+                  <Label color="black">Data de Nascimento</Label>
+                  {Platform.OS === 'ios' ? (
+                    <DatePickerIOS
+                      value={field.value ? new Date(field.value) : new Date()}
+                      onChange={(event, selectedDate) => {
+                        setValue('dataNascimento', selectedDate?.toISOString() || field.value);
+                      }}
                     />
-                  </View>
-                )}
-              />
-            </View>
-  
-            <View style={styles.selectColumn}>
-              <Controller
-                control={control}
-                name="statusPagamento"
-                render={({ field }) => (
-                  <View style={styles.fieldContainer}>
-                    <Label color={'black'}>Status do Pagamento</Label>
-                    <SelectPicker
-                      items={[
-                        { label: 'Selecione o status de pagamento', value: '' },
-                        { label: 'Pago', value: 'pago' },
-                        { label: 'Pendente', value: 'pendente' },
-                      ]}
-                      placeholder={{}}
-                      value={field.value}
-                      onValueChange={field.onChange}
+                  ) : (
+                    <DatePickerAndroid
+                      value={field.value ? new Date(field.value) : new Date()}
+                      onChange={(event, selectedDate) => {
+                        setValue('dataNascimento', selectedDate?.toISOString() || field.value);
+                      }}
                     />
-                  </View>
-                )}
-              />
-            </View>
+                  )}
+                </View>
+              )}
+            />
           </View>
-  
-          <View style={styles.selectRow}>
-    
-  
-      
+
+          {/* Foto (URL) */}
+          <View style={styles.selectColumn}>
+            <Controller
+              control={control}
+              name="foto"
+              render={({ field }) => (
+                <FormField
+                  label="Foto (URL)"
+                  value={field.value}
+                  onChangeText={field.onChange}
+                  containerStyle={styles.fieldContainer}
+                />
+              )}
+            />
           </View>
+
   
-          <View style={styles.selectRow}>
-            <View style={styles.selectColumn}>
-              <Controller
-                control={control}
-                name="telefone"
-                render={({ field }) => (
-                  <FormField
-                    label="Telefone"
+
+          {/* Objetivos */}
+          <View style={styles.selectColumn}>
+            <Controller
+              control={control}
+              name="objetivos"
+              render={({ field }) => (
+                <FormField
+                  label="Objetivos do Aluno"
+                  value={field.value}
+                  onChangeText={field.onChange}
+                  containerStyle={styles.fieldContainer}
+                />
+              )}
+            />
+          </View>
+
+          {/* Preferências de Treino */}
+          <View style={styles.selectColumn}>
+            <Controller
+              control={control}
+              name="preferenciasTreino"
+              render={({ field }) => (
+                <View style={styles.fieldContainer}>
+                  <Label color={'black'}>Preferências de Treino</Label>
+                  <SelectPicker
+                    items={[
+                      { label: 'Selecione a preferência de treino', value: '' },
+                      { label: 'Hipertrofia', value: 'hipertrofia' },
+                      { label: 'Emagrecimento', value: 'emagrecimento' },
+                      { label: 'Resistência', value: 'resistencia' },
+                    ]}
+                    placeholder={{}}
                     value={field.value}
-                    onChangeText={field.onChange}
-                    maskType="cel-phone"
-                    customTextInputProps={{ placeholder: '(99) 99999-9999' }}
-                    containerStyle={styles.fieldContainer}
+                    onValueChange={field.onChange}
                   />
-                )}
-              />
-            </View>
-  
-            <View style={styles.selectColumn}>
-              <Controller
-                control={control}
-                name="objetivos"
-                render={({ field }) => (
-                  <FormField
-                    label="Objetivos"
-                    value={field.value}
-                    onChangeText={field.onChange}
-                    containerStyle={styles.fieldContainer}
-                  />
-                )}
-              />
-            </View>
+                </View>
+              )}
+            />
           </View>
-  
-          <View style={styles.selectRow}>
-            <View style={styles.selectColumn}>
-              <Controller
-                control={control}
-                name="informacoesMedicas"
-                render={({ field }) => (
-                  <FormField
-                    label="Informações Médicas"
+
+          {/* Tipo de Plano */}
+          <View style={styles.selectColumn}>
+            <Controller
+              control={control}
+              name="tipoPlano"
+              render={({ field }) => (
+                <View style={styles.fieldContainer}>
+                  <Label color={'black'}>Tipo de Plano</Label>
+                  <SelectPicker
+                    items={[
+                      { label: 'Selecione o tipo de plano', value: '' },
+                      { label: 'Plano Mensal', value: 'mensal' },
+                      { label: 'Plano Trimestral', value: 'trimestral' },
+                      { label: 'Plano Anual', value: 'anual' },
+                    ]}
+                    placeholder={{}}
                     value={field.value}
-                    onChangeText={field.onChange}
-                    containerStyle={styles.fieldContainer}
+                    onValueChange={field.onChange}
                   />
-                )}
-              />
-            </View>
-  
-            <View style={styles.selectColumn}>
-              <Controller
-                control={control}
-                name="ativo"
-                render={({ field }) => (
-                  <View style={styles.fieldContainer}>
-                    <Label width={100} color={'black'}>
-                      Ativo
-                    </Label>
-                    <Switch
-                      checked={field.value}
-                      onChange={() => field.onChange(!field.value)}
-                      size="$3"
-                      color="$primary"
-                      borderWidth={2}
-                      borderColor="$border"
-                      backgroundColor={field.value ? '$success' : '$error'}
-                      thumbColor={field.value ? '$successDark' : '$errorDark'}
-                    />
-                  </View>
-                )}
-              />
-            </View>
+                </View>
+              )}
+            />
           </View>
-  
+
+          {/* Status do Pagamento */}
+          <View style={styles.selectColumn}>
+            <Controller
+              control={control}
+              name="statusPagamento"
+              render={({ field }) => (
+                <View style={styles.fieldContainer}>
+                  <Label color={'black'}>Status do Pagamento</Label>
+                  <SelectPicker
+                    items={[
+                      { label: 'Selecione o status de pagamento', value: '' },
+                      { label: 'Pago', value: 'pago' },
+                      { label: 'Pendente', value: 'pendente' },
+                    ]}
+                    placeholder={{}}
+                    value={field.value}
+                    onValueChange={field.onChange}
+                  />
+                </View>
+              )}
+            />
+          </View>
+
+          {/* Informações Médicas */}
+          <View style={styles.selectColumn}>
+            <Controller
+              control={control}
+              name="informacoesMedicas"
+              render={({ field }) => (
+                <FormField
+                  label="Informações Médicas"
+                  value={field.value}
+                  onChangeText={field.onChange}
+                  containerStyle={styles.fieldContainer}
+                />
+              )}
+            />
+          </View>
+
+                  {/* Ativo */}
+                  <View style={styles.selectColumn}>
+            {/* <Controller
+              control={control}
+              name="ativo"
+              render={({ field }) => (
+                <View style={styles.fieldContainer}>
+                  <Label width={100} color={'black'}>
+                    Ativo
+                  </Label>
+                  <Switch
+                    checked={field.value}
+                    onChange={() => field.onChange(!field.value)}
+                    size="$3"
+                    color="$primary"
+                    borderWidth={2}
+                    borderColor="$border"
+                    backgroundColor={field.value ? '$success' : '$error'}
+                    thumbColor={field.value ? '$successDark' : '$errorDark'}
+                  />
+                </View>
+              )}
+            /> */}
+          </View>
+
+          {/* Botões de Submit e Voltar */}
           <XStack space="$4" justifyContent="center">
             <Button onPress={handleSubmit(onSubmit)} style={styles.submitButton}>
               Submit
@@ -345,14 +341,13 @@ const AddAlunoForm = () => {
       </ScrollView>
     </View>
   );
-  
 };
 
 const styles = StyleSheet.create({
   screenContainer: {
     flex: 1,
     position: 'relative',
-    backgroundColor: '#f5f5f5', // Adicionado para uma cor de fundo clara
+    backgroundColor: '#cacaca', // Adicionado para uma cor de fundo clara
   },
   progressWheelOverlay: {
     position: 'absolute',
@@ -362,21 +357,24 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     flex: 1,
-    padding: 16,
   },
   fieldContainer: {
-    marginBottom: 16,
-  },
-  selectRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 16,
+    marginBottom: 16, 
   },
   selectColumn: {
-    flex: 1,
     marginHorizontal: 8,
   },
-
+  submitButton: {
+    backgroundColor: '#191970', 
+    padding: 10,
+    borderRadius: 5,
+  },
+  backButton: {
+    backgroundColor: 'red', // Cinza para o botão de voltar
+    color: 'white',
+    padding: 10,
+    borderRadius: 5,
+  },
 });
 
 export default AddAlunoForm;

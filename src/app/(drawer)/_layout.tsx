@@ -97,7 +97,7 @@ const DrawerLayout: React.FC = () => (
             <Text style={styles.headerTitleText}>Usuários</Text>
           </View>
         ),
-        drawerLabel: 'Usuários',
+        drawerLabel: 'Minha Conta',
         drawerIcon: ({ size, color }) => (
           <Ionicons name="people-outline" size={size} color={color} />
         ),
@@ -114,10 +114,10 @@ const DrawerLayout: React.FC = () => (
         headerTitle: () => (
           <View style={styles.headerTitleContainer}>
             <Ionicons name="school-outline" size={24} color="black" />
-            <Text style={styles.headerTitleText}>Alunos</Text>
+            <Text style={styles.headerTitleText}>Alunos/Professores</Text>
           </View>
         ),
-        drawerLabel: 'Alunos',
+        drawerLabel: 'Alunos - Professores',
         drawerIcon: ({ size, color }) => (
           <Ionicons name="school-outline" size={size} color={color} />
         ),
