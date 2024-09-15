@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ScrollView, StyleSheet, Pressable, View } from 'react-native';
+import { ScrollView, StyleSheet, Pressable, View, ActivityIndicator } from 'react-native';
 import { Button, Text, YStack, Image } from 'tamagui';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useQueryGetAllAlunos } from '~/src/hooks/Alunos/useQueryGetAllAlunos';
@@ -11,6 +11,7 @@ export default function AlunosList() {
   const { data, error, isLoading, refetch } = useQueryGetAllAlunos();
   const [selectedAluno, setSelectedAluno] = useState<Aluno | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
+  const [loadingReload, setLoadingReload] = useState(false); // Estado para o carregamento do botão de reload
 
   const navigation = useNavigation();
 
@@ -20,14 +21,21 @@ export default function AlunosList() {
   };
 
   const handleAddAlunoPress = () => {
-    // Navega para a tela de adicionar aluno
     //@ts-ignore
     navigation.navigate('addAlunos');
+  };
+
+  const handleReload = async () => {
+    setLoadingReload(true);
+    await refetch();
+    setLoadingReload(false);
   };
 
   if (isLoading) {
     return (
       <YStack flex={1} justifyContent="center" alignItems="center">
+        {/* spinner tlgd */}
+        <ActivityIndicator size="large" color="#0000ff" />
         <Text>Carregando...</Text>
       </YStack>
     );
@@ -48,13 +56,18 @@ export default function AlunosList() {
   return (
     <YStack padding="$4" flex={1}>
       <YStack flexDirection="row" justifyContent="space-between" alignItems="center" marginBottom="$4">
-        <Text fontSize="$5" fontWeight="bold">Alunos</Text>
+        <Text fontSize="$5" fontWeight="bold">Usuários</Text>
         <Button onPress={handleAddAlunoPress} style={styles.addButton}>
           <Ionicons name="add-outline" size={24} color="black" />
           <Text style={styles.addButtonText}>Adicionar Aluno</Text>
         </Button>
-        <Button onPress={() => refetch()}>
-          <Ionicons name="reload-outline" size={24} color="white" />
+        {/* Exibindo spinner no botão de reload enquanto está recarregando */}
+        <Button onPress={handleReload}>
+          {loadingReload ? (
+            <ActivityIndicator size="small" color="white" />
+          ) : (
+            <Ionicons name="reload-outline" size={24} color="white" />
+          )}
         </Button>
       </YStack>
 
@@ -63,9 +76,16 @@ export default function AlunosList() {
           <Pressable key={aluno.id} onPress={() => handleAlunoPress(aluno)}>
             <YStack padding="$4" borderWidth={1} borderColor="#ddd" marginBottom="$4" borderRadius="$2" backgroundColor="white">
               <YStack flexDirection="row" alignItems="center">
-                <Image src={aluno.foto} width={60} height={60} borderRadius={30} />
+                {/* ,` */}
+                <Image 
+                  src={aluno.foto} 
+                  width={60} 
+                  height={60} 
+                  borderRadius={30} 
+                  alt="Foto do aluno"
+                />
                 <YStack marginLeft="$4">
-                  <Text fontWeight="bold" fontSize="$4">{aluno.nome}</Text>
+                  <Text fontWeight="bold" fontSize="$4">{aluno.nome} - {aluno.tipo}</Text>
                   <Text>Email: {aluno.email}</Text>
                   <Text>Telefone: {aluno.telefone}</Text>
                 </YStack>

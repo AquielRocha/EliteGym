@@ -4,8 +4,11 @@ import { FloatingLabelInput } from 'react-native-floating-label-input';
 import { TextInputMask } from 'react-native-masked-text';
 
 const FormField = ({
+  //@ts-ignore
   label,
+  //@ts-ignore
   value,
+  //@ts-ignore
   onChangeText,
   containerStyle = {},
   labelStyle = {},
@@ -15,7 +18,7 @@ const FormField = ({
   const commonStyles = StyleSheet.create({
     container: {
       marginVertical: 10,
-      width: '70%', // Ajusta para preencher o espaço disponível
+      width: '100%', // Ajusta para preencher o espaço disponível
     },
     inputContainer: {
       borderWidth: 1,
@@ -23,10 +26,10 @@ const FormField = ({
       backgroundColor: '#fff',
       borderColor: '#B0C4DE',
       borderRadius: 8,
+      height: 48, // Altura padrão para consistência
     },
     input: {
-      height: 40,
-      
+      height: '100%',
       color: '#000',
       paddingHorizontal: 10,
       paddingVertical: 5,

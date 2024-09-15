@@ -4,7 +4,7 @@ import { z } from 'zod';
 export const alunoSchema = z.object({
   nome: z.string().min(1, 'Nome é obrigatório'),
   email: z.string().email('Email inválido'),
-  foto: z.string().min(1, 'Foto deve ser uma URL válida'),
+  foto: z.string(),
   tipo: z.string().min(1, 'Tipo é obrigatório'),
   dataNascimento: z.string().refine(
     (value) => !isNaN(Date.parse(value)), 

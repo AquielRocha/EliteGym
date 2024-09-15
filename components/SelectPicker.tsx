@@ -10,16 +10,17 @@ interface SelectPickerProps {
 }
 
 const SelectPicker: React.FC<SelectPickerProps> = ({ items, placeholder, value, onValueChange }) => {
-  const androidStyles = StyleSheet.create({
-    inputAndroid: {
-      height: 40,
-      width: 300,
+  const commonStyles = StyleSheet.create({
+    inputContainer: {
+      height: 48, // Altura padronizada igual ao FormField
+      borderWidth: 1,
       borderColor: '#B0C4DE',
-      borderWidth: 2,
       borderRadius: 8,
       paddingHorizontal: 10,
-      paddingVertical: 8,
       backgroundColor: '#fff',
+      justifyContent: 'center',
+    },
+    input: {
       color: '#000',
     },
     placeholder: {
@@ -34,14 +35,11 @@ const SelectPicker: React.FC<SelectPickerProps> = ({ items, placeholder, value, 
         items={items}
         value={value}
         placeholder={placeholder || { label: 'Selecione uma opção...', value: '' }}
-        style={
-          Platform.OS === 'android'
-            ? {
-                inputAndroid: androidStyles.inputAndroid,
-                placeholder: androidStyles.placeholder,
-              }
-            : undefined
-        }
+        style={{
+          inputAndroid: commonStyles.inputContainer,
+          inputIOS: commonStyles.inputContainer,
+          placeholder: commonStyles.placeholder,
+        }}
         useNativeAndroidPickerStyle={false}
       />
     </View>
@@ -51,6 +49,7 @@ const SelectPicker: React.FC<SelectPickerProps> = ({ items, placeholder, value, 
 const styles = StyleSheet.create({
   container: {
     marginVertical: 10,
+    width: '100%', // Preencher o espaço disponível
   },
 });
 

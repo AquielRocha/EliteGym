@@ -20,7 +20,7 @@ export interface Aluno {
   id: number;
   nome: string;
   email: string;
-  foto?: string;
+  foto: string;
   tipo: string;
   dataNascimento: string; // ou Date se preferir
   telefone: string;

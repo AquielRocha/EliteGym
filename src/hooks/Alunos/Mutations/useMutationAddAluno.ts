@@ -31,7 +31,14 @@ export interface NovoAluno {
 export const useMutationAddAluno = () => {
   return useMutation({
     mutationFn: async (novoAluno: NovoAluno) => {
-      return await axios.post(`${API_BASE_URL}Alunos/add`, novoAluno);
+      try {
+        const response = await axios.post(`${API_BASE_URL}Alunos/add`, novoAluno);
+        return response.data;
+      } catch (error: any) {
+        throw new Error(error.response?.data?.message || 'Erro ao adicionar aluno');
+      }
     },
+    
+    
   });
 };
