@@ -120,12 +120,12 @@ const AddAlunoForm = () => {
       mutate(formattedData, {
         onSuccess: () => {
           Alert.alert('Success', 'Aluno adicionado com sucesso!');
-          reset(); // Limpa o formulário
-          setFotoBase64(''); // Limpa a imagem
-          navigation.goBack(); // Retorna à tela anterior
+          reset(); 
+          setFotoBase64(''); 
+          navigation.goBack(); 
         },
         onError: (error) => {
-          console.error('Erro ao adicionar aluno:', error); // Mostra o erro no console
+          console.error('Erro ao adicionar aluno:', error); 
           Alert.alert('Error', 'Falha ao adicionar o aluno');
         },
       });
@@ -133,7 +133,7 @@ const AddAlunoForm = () => {
       console.log('Erro ao enviar dados', error);
       Alert.alert('Error', 'Falha ao enviar os dados.');
     } finally {
-      setLoading(false); // Finalizar o estado de carregamento
+      setLoading(false); 
     }
   };
   
