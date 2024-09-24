@@ -1,3 +1,5 @@
+
+
 import React from 'react';
 import { View, StyleSheet, Image, TouchableOpacity, Linking } from 'react-native';
 import { Button, YStack, Text } from 'tamagui';
@@ -27,21 +29,29 @@ const CardAula: React.FC<CardAulaProps> = ({ aula, onEdit, onDelete }) => {
     }
   };
 
+  
   return (
     <YStack padding="$4" space="$2" style={styles.cardContainer}>
-      <InfoCard title={aula.nome} description={aula.descricao} />
-
+      {/* <InfoCard title={aula.nome} description={aula.descricao} /> */}
+      <View>
+        <Text fontWeight="bold" fontSize="$6">
+          {aula.nome}
+        </Text>
+        <Text color="$gray10" fontSize="$4">
+          {aula.descricao}
+        </Text>
+      </View>
     
       {aula.foto ? (
-        <View style={styles.imageContainer}>
+        <View >
           <Image
             source={{ uri: aula.foto }}
-            style={styles.image}
+            style={[styles.image]}
             resizeMode="contain"
           />
         </View>
       ) : (
-        <View style={styles.imageContainer}>
+        <View >
           <Text>Imagem não disponível</Text>
         </View>
       )}
@@ -69,14 +79,11 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: '#fff',
   },
-  imageContainer: {
-    marginTop: 8,
-    borderRadius: 8,
-    overflow: 'hidden',
-  },
+ 
   image: {
     width: '100%',
     height: 200,
+    borderRadius: 8,
   },
   buttonContainer: {
     flexDirection: 'row',

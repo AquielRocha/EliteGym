@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ScrollView, View, StyleSheet, Alert } from 'react-native';
+import { ScrollView, View, StyleSheet, Alert, ActivityIndicator } from 'react-native';
 import { Button, Text, YStack, Input } from 'tamagui';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useQueryGetAll } from '~/src/hooks/Aulas/useQuerygetAllAulas';
@@ -19,6 +19,7 @@ export default function ListarAulas() {
   const { data, error, isLoading, refetch } = useQueryGetAll();
   const deleteAula = useDeleteAula();
   const editAula = useEditAula();
+  const [loadingReload, setLoadingReload] = useState(false); // Estado para o carregamento do botão de reload
 
   const [editing, setEditing] = useState<Aula | null>(null);
   const [editedAula, setEditedAula] = useState<Aula | null>(null);
@@ -40,6 +41,13 @@ export default function ListarAulas() {
     );
   };
 
+  
+  const handleReload = async () => {
+    setLoadingReload(true);
+    await refetch();
+    setLoadingReload(false);
+  };
+
   const handleEdit = (aula: Aula) => {
     setEditing(aula);
     setEditedAula({ ...aula });
@@ -52,25 +60,25 @@ export default function ListarAulas() {
     }
   };
 
+
   if (isLoading) {
     return (
-      <YStack padding="$4" flex={1} justifyContent="center" alignItems="center">
-        <Text fontSize="$5" fontWeight="bold" marginBottom="$3">
-          Aulas 
-        </Text>
+      <YStack flex={1} justifyContent="center" alignItems="center">
+        {/* spinner tlgd */}
+        <ActivityIndicator size="large" color="#0000ff" />
         <Text>Carregando...</Text>
       </YStack>
     );
   }
 
   if (error) {
-    console.error('Erro ao carregar aulas:', error);
     return (
-      <YStack padding="$4" flex={1} justifyContent="center" alignItems="center">
-        <Text fontSize="$5" fontWeight="bold" marginBottom="$3">
-          Aulas
-        </Text>
-        <Text>Erro ao carregar aulas</Text>
+      <YStack flex={1} justifyContent="center" alignItems="center">
+        <Text>Erro ao carregar dados.</Text>
+        <Button onPress={() => refetch()}>
+          <Ionicons name="reload-outline" size={24} color="white" />
+          <Text> Tentar novamente</Text>
+        </Button>
       </YStack>
     );
   }
@@ -83,8 +91,12 @@ export default function ListarAulas() {
         <Text fontSize="$5" fontWeight="bold">
           Aulas 
         </Text>
-        <Button size="$3" onPress={() => refetch()} style={styles.iconButton}>
-          <Ionicons name="reload-outline" size={24} color="black" />
+        <Button onPress={handleReload}>
+          {loadingReload ? (
+            <ActivityIndicator size="small" color="white" />
+          ) : (
+            <Ionicons name="reload-outline" size={24} color="white" />
+          )}
         </Button>
       </YStack>
       <ScrollView>

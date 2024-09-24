@@ -1,11 +1,10 @@
 import React from 'react';
 import { ScrollView, Dimensions, StyleSheet } from 'react-native';
 import { View, Text, YStack, Button } from 'tamagui';
-import { BarChart, LineChart } from 'react-native-chart-kit';
+import { BarChart, LineChart, PieChart } from 'react-native-chart-kit'; // Adicione PieChart
 import { Link } from 'expo-router';
 import { Container } from '~/components/Container';
 import { useRouter } from 'expo-router';
-
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -26,6 +25,24 @@ const lineChartData = {
     },
   ],
 };
+
+// Dados para o gráfico de pizza
+const pieChartData = [
+  {
+    name: 'Alunos',
+    population: 80, // Mockado
+    color: '#0000FF', // Azul
+    legendFontColor: '#000000',
+    legendFontSize: 15,
+  },
+  {
+    name: 'Aulas',
+    population: 20, // Mockado
+    color: '#00BFFF', // Azul claro
+    legendFontColor: '#000000',
+    legendFontSize: 15,
+  },
+];
 
 export default function Home() {
   const router = useRouter();
@@ -69,19 +86,52 @@ export default function Home() {
               </YStack>
             </YStack>
 
+            {/* Gráfico de Pizza */}
+            <YStack padding="$4" backgroundColor="$primaryLight">
+              <Text fontSize="$5" fontWeight="bold" color="$primaryDark">
+                Distribuição de Alunos e Aulas
+              </Text>
+              <YStack space="$2" marginTop="$2">
+                <PieChart
+                  data={pieChartData}
+                  width={screenWidth - 32}
+                  height={220}
+                  chartConfig={{
+                    backgroundColor: '#ffffff',
+                    backgroundGradientFrom: '#ffffff',
+                    backgroundGradientTo: '#ffffff',
+                    color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+                    labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+                  }}
+                  accessor="population"
+                  backgroundColor="transparent"
+                  paddingLeft="15"
+                  style={{ marginVertical: 8 }}
+                />
+              </YStack>
+            </YStack>
+
             {/* Ações Rápidas */}
             <YStack padding="$4" backgroundColor="$secondaryLight">
-              <Text fontSize="$5" fontWeight="bold" color="$secondaryDark">
+              <Text fontSize="$9" alignItems='center' fontWeight="bold" color="$secondaryDark">
                 Ações Rápidas
               </Text>
               <YStack space="$2" marginTop="$2">
-       
-              <Button onPress={() => router.push('/Aulas')}>
+                <Button onPress={() => router.push('/Aulas')}>
                   Aulas
                 </Button>
-
-               
               </YStack>
+              <YStack space="$2" marginTop="$2">
+                <Button onPress={() => router.push('/Aparelhos')}>
+                  Aparelhos
+                </Button>
+              </YStack>
+              <YStack space="$2" marginTop="$2">
+                <Button onPress={() => router.push('/Alunos')}>
+                  Alunos
+                </Button>
+              </YStack>
+
             </YStack>
           </YStack>
 
@@ -108,12 +158,11 @@ export default function Home() {
                 }}
                 style={{ marginVertical: 8 }}
               />
-        
               <Text fontSize="$4" color="$white">
                 - bla bla bla
               </Text>
               <Text fontSize="$4" color="$white">
-                - Novo instrutor de comer xoxota se juntou a tropa dos comedores de casadas
+                - Novo instrutor se juntou à equipe
               </Text>
             </YStack>
           </YStack>
