@@ -34,23 +34,14 @@ export default function FinanceiroLayout() {
         }}
       /> */}
         <Tabs.Screen
-          name="config"
+          name="mensalidades"
           options={{
-            title: 'Config',
+            title: 'Mensalidades',
             tabBarIcon: ({ color }) => (
               <Ionicons name="settings-outline" size={24} color={color} />
             ),
           }}
         />
-      <Tabs.Screen
-        name="user"
-        options={{
-          title: 'Conta',
-          tabBarIcon: ({ color }) => (
-            <Ionicons name="person-outline" size={24} color={color} />
-          ),
-        }}
-      />
     </Tabs>
   );
 }
