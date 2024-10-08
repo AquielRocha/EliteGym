@@ -13,6 +13,7 @@ import AnimatedProgressWheel from 'react-native-progress-wheel';
 import { alunoSchema, AlunoFormData } from '~/src/Interfaces/AlunoSchema';
 import * as ImagePicker from 'expo-image-picker';
 import { readAsStringAsync } from 'expo-file-system';
+import { useQueryGetPlano } from '~/src/hooks/Alunos/useQueryGetPlano';
 
 const AddAlunoForm = () => {
   const navigation = useNavigation();
@@ -27,22 +28,50 @@ const AddAlunoForm = () => {
       nome: '',
       email: '',
       foto: '',
-      tipo: '',
+      tipo: '', //tipo de Usuário
       dataNascimento: '',
       telefone: '',
       objetivos: '',
-      tipoPlano: '',
-      statusPagamento: '',
-      informacoesMedicas: '',
-      preferenciasTreino: '',
       ativo: true,
       enderecos: [],
+      planos: [],
     },
   });
 
   const adicionarEndereco = () => {
     setEnderecos([...enderecos, { rua: '', numero: '', complemento: '', bairro: '', cidade: '', estado: '', codigoPostal: '', pais: '' }]);
   };
+
+  const PlanoSelect = () => {
+    const { data: planos, isLoading: isLoadingPlanos } = useQueryGetPlano();
+    return (
+      <Controller
+        control={control}
+        name="planos"
+        render={({ field }) => (
+          <View style={styles.fieldContainer}>
+            <Label color={'black'}>Selecione o Plano</Label>
+            {isLoadingPlanos ? (
+              <ActivityIndicator size="small" color="#000" />
+            ) : (
+              <SelectPicker
+                items={[
+                  { label: 'Selecione um plano', value: '' },
+                  ...(planos?.map((plano) => ({
+                    label: `${plano.nome} - R$${plano.valor}`,
+                    value: plano.id,
+                  })) || []),
+                ]}
+                value={field.value}
+                onValueChange={field.onChange}
+              />
+            )}
+          </View>
+        )}
+      />
+    );
+  };
+
 
     // Função para remover um endereço
     const removerEndereco = (index: number) => {
@@ -86,19 +115,33 @@ const AddAlunoForm = () => {
       Alert.alert('Cancelado', 'Você cancelou a seleção da imagem.');
     }
   };
-
   useEffect(() => {
     const subscription = watch((data) => {
-      const totalFields = 12;
-      const filledFields = Object.values(data).filter(
-        (value) => value !== '' && value !== null && value !== undefined
-      ).length;
+      let totalFields = 9; // Total de campos que estamos considerando
+      let filledFields = 0;
+  
+      // Verificar cada campo e contar se está preenchido
+      if (data.nome) filledFields++;
+      if (data.email) filledFields++;
+      if (data.telefone) filledFields++;
+      if (data.dataNascimento) filledFields++;
+      if (data.objetivos) filledFields++;
+      if (data.tipo) filledFields++;
+      if (data.planos && data.planos.length > 0) filledFields++;  // Considerar plano selecionado
+      if (fotoBase64) filledFields++; // Contar a imagem como preenchida
+  
+      // Verificar se ao menos um endereço está preenchido
+      if (enderecos.some(endereco => endereco.rua || endereco.numero || endereco.bairro || endereco.cidade || endereco.estado)) {
+        filledFields++;
+      }
+  
+      // Atualizar o progresso com base no número de campos preenchidos
       setProgress((filledFields / totalFields) * 100);
     });
-
+  
     return () => subscription.unsubscribe();
-  }, [watch]);
-
+  }, [watch, enderecos, fotoBase64]);
+  
   const { mutate } = useMutationAddAluno();
 
   const onSubmit = async (data: AlunoFormData) => {
@@ -279,99 +322,13 @@ const AddAlunoForm = () => {
             />
           </View>
 
-          {/* Preferências de Treino */}
-          <View style={styles.selectColumn}>
-            <Controller
-              control={control}
-              name="preferenciasTreino"
-              render={({ field }) => (
-                <View style={styles.fieldContainer}>
-                  <Label color={'black'}>Preferências de Treino</Label>
-                  <SelectPicker
-                    items={[
-                      { label: 'Selecione a preferência de treino', value: '' },
-                      { label: 'Hipertrofia', value: 'Hipertrofia' },
-                      { label: 'Emagrecimento', value: 'Emagrecimento' },
-                      { label: 'Resistência', value: 'Resistencia' },
-                    ]}
-                    //@ts-ignore
-                    placeholder={{}}
-                    //@ts-ignore
-                    value={field.value}
-                    onValueChange={field.onChange}
-                  />
-                </View>
-              )}
-            />
-          </View>
+          
+  {/* Plano */}
+  <PlanoSelect />
+        
 
-          {/* Tipo de Plano */}
-          <View style={styles.selectColumn}>
-            <Controller
-              control={control}
-              name="tipoPlano"
-              render={({ field }) => (
-                <View style={styles.fieldContainer}>
-                  <Label color={'black'}>Tipo de Plano</Label>
-                  <SelectPicker
-                    items={[
-                      { label: 'Selecione o tipo de plano', value: '' },
-                      { label: 'Plano Mensal', value: 'Mensal' },
-                      { label: 'Plano Trimestral', value: 'Trimestral' },
-                      { label: 'Plano Anual', value: 'Asnual' },
-                    ]}
-                    //@ts-ignore
-                    placeholder={{}}
-                    //@ts-ignore
-                    value={field.value}
-                    onValueChange={field.onChange}
-                  />
-                </View>
-              )}
-            />
-          </View>
-
-          {/* Status do Pagamento */}
-          <View style={styles.selectColumn}>
-            <Controller
-              control={control}
-              name="statusPagamento"
-              render={({ field }) => (
-                <View style={styles.fieldContainer}>
-                  <Label color={'black'}>Status do Pagamento</Label>
-                  <SelectPicker
-                    items={[
-                      { label: 'Selecione o status de pagamento', value: '' },
-                      { label: 'Pago', value: 'Pago' },
-                      { label: 'Pendente', value: 'Pendente' },
-                    ]}
-                    //@ts-ignore
-
-                    placeholder={{}}
-                    //@ts-ignore
-                    value={field.value}
-                    onValueChange={field.onChange}
-                  />
-                </View>
-              )}
-            />
-          </View>
-
-          {/* Informações Médicas */}
-          <View style={styles.selectColumn}>
-            <Controller
-              control={control}
-              name="informacoesMedicas"
-              render={({ field }) => (
-                <FormField
-                  label="Informações Médicas"
-                  value={field.value}
-                  onChangeText={field.onChange}
-                  containerStyle={styles.fieldContainer}
-                />
-              )}
-            />
-          </View>
+  
+  
 
           <XStack space="$4" justifyContent="center">
           <Button onPress={handleSubmit(onSubmit)} style={styles.submitButton} disabled={loading}>

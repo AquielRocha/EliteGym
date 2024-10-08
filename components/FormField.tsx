@@ -3,12 +3,19 @@ import { View, StyleSheet } from 'react-native';
 import { FloatingLabelInput } from 'react-native-floating-label-input';
 import { TextInputMask } from 'react-native-masked-text';
 
-const FormField = ({
-  //@ts-ignore
+interface FormFieldProps {
+  label: string;
+  value: string;
+  onChangeText: (text: string) => void;
+  containerStyle?: object;
+  labelStyle?: object;
+  maskType?: string | null;
+  [key: string]: any;
+}
+
+const FormField: React.FC<FormFieldProps> = ({
   label,
-  //@ts-ignore
   value,
-  //@ts-ignore
   onChangeText,
   containerStyle = {},
   labelStyle = {},
@@ -17,30 +24,34 @@ const FormField = ({
 }) => {
   const commonStyles = StyleSheet.create({
     container: {
-      marginVertical: 10,
-      width: '100%', // Ajusta para preencher o espaço disponível
+      marginVertical: 12, // Aumenta o espaço entre os campos
+      width: '100%',
     },
     inputContainer: {
-      borderWidth: 1,
-      paddingHorizontal: 10,
+      borderWidth: 8,
+      borderColor: '#ffffff',
+      borderRadius: 8, // Borda arredondada
+      height: 55, // Ajusta a altura
+      shadowColor: '#ffffff',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.5,
+      shadowRadius: 2,
       backgroundColor: '#fff',
-      borderColor: '#B0C4DE',
-      borderRadius: 8,
-      height: 48, // Altura padrão para consistência
     },
     input: {
       height: '100%',
       color: '#000',
-      paddingHorizontal: 10,
-      paddingVertical: 5,
+      paddingHorizontal: 12, // Aumenta o padding
+      paddingVertical: 8, // Aumenta o padding
+      fontSize: 16, // Aumenta o tamanho da fonte
     },
     labelFocused: {
-      color: '#708090',
-      fontSize: 10,
+      color: '#000000', // Cor do rótulo quando focado
+      fontSize: 13, // Tamanho do texto quando focado
     },
     labelBlurred: {
-      color: '#708090',
-      fontSize: 18,
+      color: '#000000',
+      fontSize: 16, // Tamanho do texto quando desfocado
     },
   });
 

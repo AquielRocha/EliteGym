@@ -13,9 +13,6 @@ export const alunoSchema = z.object({
   telefone: z.string().min(10, 'Telefone inválido').optional(),
   objetivos: z.string().optional(),
   tipoPlano: z.string().optional(),
-  statusPagamento: z.string().optional(),
-  informacoesMedicas: z.string().optional(),
-  preferenciasTreino: z.string().optional(),
   ativo: z.boolean(),
   enderecos: z.array(
     z.object({
@@ -29,6 +26,27 @@ export const alunoSchema = z.object({
       pais: z.string().optional(),
     })
   ).optional(),
+
+  mensalidades: z.array(
+    z.object({
+      aluno: z.string(),
+      plano: z.object({
+        id: z.number(),
+        nome: z.string(),
+        valor: z.number(),
+        descricao: z.string()
+      }),
+      dataVencimento: z.string().refine(
+        (value) => !isNaN(Date.parse(value)), 
+        'Data de vencimento inválida'
+      ),
+      dataPagamento: z.string().refine(
+        (value) => !isNaN(Date.parse(value)), 
+        'Data de pagamento inválida'
+      ).optional(),
+      status: z.string()
+    })
+  ).optional()
 });
 
 // Tipos inferidos a partir do schema

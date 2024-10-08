@@ -14,7 +14,7 @@ const SelectPicker: React.FC<SelectPickerProps> = ({ items, placeholder, value, 
     inputContainer: {
       height: 48, // Altura padronizada igual ao FormField
       borderWidth: 1,
-      borderColor: '#B0C4DE',
+      borderColor: '#ffffff',
       borderRadius: 8,
       paddingHorizontal: 10,
       backgroundColor: '#fff',
@@ -24,7 +24,7 @@ const SelectPicker: React.FC<SelectPickerProps> = ({ items, placeholder, value, 
       color: '#000',
     },
     placeholder: {
-      color: 'gray',
+      color: '#000000',
     },
   });
 
