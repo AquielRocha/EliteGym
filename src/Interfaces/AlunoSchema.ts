@@ -4,7 +4,7 @@ import { z } from 'zod';
 export const alunoSchema = z.object({
   nome: z.string().min(1, 'Nome é obrigatório'),
   email: z.string().email('Email inválido'),
-  foto: z.string(),
+  foto: z.string().optional(), // A foto pode ser opcional
   tipo: z.string().min(1, 'Tipo é obrigatório'),
   dataNascimento: z.string().refine(
     (value) => !isNaN(Date.parse(value)), 
@@ -12,8 +12,8 @@ export const alunoSchema = z.object({
   ),
   telefone: z.string().min(10, 'Telefone inválido').optional(),
   objetivos: z.string().optional(),
-  tipoPlano: z.string().optional(),
   ativo: z.boolean(),
+  planoId: z.number().min(1, 'Plano é obrigatório'), // Adicionando o campo de planoId corretamente
   enderecos: z.array(
     z.object({
       rua: z.string().optional(),
@@ -25,28 +25,7 @@ export const alunoSchema = z.object({
       codigoPostal: z.string().optional(),
       pais: z.string().optional(),
     })
-  ).optional(),
-
-  mensalidades: z.array(
-    z.object({
-      aluno: z.string(),
-      plano: z.object({
-        id: z.number(),
-        nome: z.string(),
-        valor: z.number(),
-        descricao: z.string()
-      }),
-      dataVencimento: z.string().refine(
-        (value) => !isNaN(Date.parse(value)), 
-        'Data de vencimento inválida'
-      ),
-      dataPagamento: z.string().refine(
-        (value) => !isNaN(Date.parse(value)), 
-        'Data de pagamento inválida'
-      ).optional(),
-      status: z.string()
-    })
-  ).optional()
+  ).optional(), // Endereços são opcionais, mas se forem fornecidos, seguem esse esquema
 });
 
 // Tipos inferidos a partir do schema

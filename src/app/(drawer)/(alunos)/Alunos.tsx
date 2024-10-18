@@ -34,7 +34,6 @@ export default function AlunosList() {
   if (isLoading) {
     return (
       <YStack flex={1} justifyContent="center" alignItems="center">
-        {/* spinner tlgd */}
         <ActivityIndicator size="large" color="#0000ff" />
         <Text>Carregando...</Text>
       </YStack>
@@ -61,7 +60,6 @@ export default function AlunosList() {
           <Ionicons name="add-outline" size={24} color="black" />
           <Text style={styles.addButtonText}>Adicionar Aluno</Text>
         </Button>
-        {/* Exibindo spinner no botão de reload enquanto está recarregando */}
         <Button onPress={handleReload}>
           {loadingReload ? (
             <ActivityIndicator size="small" color="white" />
@@ -76,9 +74,8 @@ export default function AlunosList() {
           <Pressable key={aluno.id} onPress={() => handleAlunoPress(aluno)}>
             <YStack padding="$4" borderWidth={1} borderColor="#ddd" marginBottom="$4" borderRadius="$2" backgroundColor="white">
               <YStack flexDirection="row" alignItems="center">
-                {/* ,` */}
                 <Image 
-                  src={aluno.foto} 
+                  src={aluno.fotoBase64} 
                   width={60} 
                   height={60} 
                   borderRadius={30} 
@@ -88,6 +85,25 @@ export default function AlunosList() {
                   <Text fontWeight="bold" fontSize="$4">{aluno.nome} - {aluno.tipo}</Text>
                   <Text>Email: {aluno.email}</Text>
                   <Text>Telefone: {aluno.telefone}</Text>
+                  {aluno.objetivos && (
+                    <Text>Objetivos: {aluno.objetivos}</Text>
+                  )}
+
+                  {/* Status de Atividade com cores */}
+                  <Text style={aluno.ativo ? styles.statusAtivo : styles.statusInativo}>
+                    Ativo: {aluno.ativo ? 'Sim' : 'Não'}
+                  </Text>
+
+                  {/* Status de Pagamento com cores */}
+                  {aluno.mensalidades?.length > 0 && (
+                    <Text style={
+                      aluno.mensalidades[0].status === 'Pago'
+                        ? styles.statusPago
+                        : styles.statusPendente
+                    }>
+                      Status de Pagamento: {aluno.mensalidades[0].status}
+                    </Text>
+                  )}
                 </YStack>
               </YStack>
             </YStack>
@@ -100,7 +116,7 @@ export default function AlunosList() {
         aluno={selectedAluno}
         onClose={() => {
           setModalVisible(false);
-          setSelectedAluno(null); // Limpa a seleção ao fechar o modal
+          setSelectedAluno(null);
         }}
       />
     </YStack>
@@ -118,5 +134,21 @@ const styles = StyleSheet.create({
   addButtonText: {
     color: 'black',
     marginLeft: 5,
+  },
+  statusAtivo: {
+    color: 'green',
+    fontWeight: 'bold',
+  },
+  statusInativo: {
+    color: 'red',
+    fontWeight: 'bold',
+  },
+  statusPago: {
+    color: 'green',
+    fontWeight: 'bold',
+  },
+  statusPendente: {
+    color: 'orange',
+    fontWeight: 'bold',
   },
 });

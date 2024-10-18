@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { View, ScrollView, Alert, Platform, StyleSheet, Image as RNImage,ActivityIndicator } from 'react-native';
+import { View, ScrollView, Alert, Platform, StyleSheet, Image as RNImage, ActivityIndicator } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
-import { Button, Label, Switch, XStack, YStack, Text} from 'tamagui';
+import { Button, Label, XStack, YStack, Text } from 'tamagui';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutationAddAluno } from '~/src/hooks/Alunos/Mutations/useMutationAddAluno';
 import FormField from '~/components/FormField';
@@ -28,16 +28,17 @@ const AddAlunoForm = () => {
       nome: '',
       email: '',
       foto: '',
-      tipo: '', //tipo de Usuário
+      tipo: '',
       dataNascimento: '',
       telefone: '',
       objetivos: '',
       ativo: true,
       enderecos: [],
-      planos: [],
+      planoId: 0, // Vamos garantir que esse valor será preenchido corretamente
     },
   });
 
+  // Função para adicionar novo endereço
   const adicionarEndereco = () => {
     setEnderecos([...enderecos, { rua: '', numero: '', complemento: '', bairro: '', cidade: '', estado: '', codigoPostal: '', pais: '' }]);
   };
@@ -47,7 +48,7 @@ const AddAlunoForm = () => {
     return (
       <Controller
         control={control}
-        name="planos"
+        name="planoId" // Alterado de 'planos' para 'planoId' como esperado pelo backend
         render={({ field }) => (
           <View style={styles.fieldContainer}>
             <Label color={'black'}>Selecione o Plano</Label>
@@ -57,11 +58,12 @@ const AddAlunoForm = () => {
               <SelectPicker
                 items={[
                   { label: 'Selecione um plano', value: '' },
-                  ...(planos?.map((plano) => ({
+                  ...(planos?.map((plano: { nome: string; valor: number; id: number }) => ({
                     label: `${plano.nome} - R$${plano.valor}`,
                     value: plano.id,
                   })) || []),
                 ]}
+                //@ts-ignore
                 value={field.value}
                 onValueChange={field.onChange}
               />
@@ -72,11 +74,12 @@ const AddAlunoForm = () => {
     );
   };
 
+  // Função para remover um endereço
+  const removerEndereco = (index: number) => {
+    setEnderecos(enderecos.filter((_, i) => i !== index));
+  };
 
-    // Função para remover um endereço
-    const removerEndereco = (index: number) => {
-      setEnderecos(enderecos.filter((_, i) => i !== index));
-    };
+  // Função para selecionar e converter imagem para Base64
   const selectImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -91,7 +94,9 @@ const AddAlunoForm = () => {
         const imageBase64 = `data:image/jpeg;base64,${base64}`;
         setFotoBase64(imageBase64);
 
-        // Confirmar a imagem com o usuário
+        // Log para visualização da imagem em Base64
+        console.log('Imagem convertida para Base64:', imageBase64);
+
         Alert.alert('Confirmar Imagem', 'Você gostaria de usar esta imagem?', [
           {
             text: 'Cancelar',
@@ -104,7 +109,6 @@ const AddAlunoForm = () => {
             text: 'Confirmar',
             onPress: () => {
               console.log('Imagem confirmada!');
-              // Não fazer nada aqui, o estado já foi definido acima
             },
           },
         ]);
@@ -115,11 +119,12 @@ const AddAlunoForm = () => {
       Alert.alert('Cancelado', 'Você cancelou a seleção da imagem.');
     }
   };
+
   useEffect(() => {
     const subscription = watch((data) => {
-      let totalFields = 9; // Total de campos que estamos considerando
+      let totalFields = 8; // Total de campos que estamos considerando
       let filledFields = 0;
-  
+
       // Verificar cada campo e contar se está preenchido
       if (data.nome) filledFields++;
       if (data.email) filledFields++;
@@ -127,59 +132,71 @@ const AddAlunoForm = () => {
       if (data.dataNascimento) filledFields++;
       if (data.objetivos) filledFields++;
       if (data.tipo) filledFields++;
-      if (data.planos && data.planos.length > 0) filledFields++;  // Considerar plano selecionado
+      if (data.planoId) filledFields++; // Ajustado para `planoId`
       if (fotoBase64) filledFields++; // Contar a imagem como preenchida
-  
+
       // Verificar se ao menos um endereço está preenchido
       if (enderecos.some(endereco => endereco.rua || endereco.numero || endereco.bairro || endereco.cidade || endereco.estado)) {
         filledFields++;
       }
-  
+
       // Atualizar o progresso com base no número de campos preenchidos
       setProgress((filledFields / totalFields) * 100);
     });
-  
+
     return () => subscription.unsubscribe();
   }, [watch, enderecos, fotoBase64]);
-  
+
   const { mutate } = useMutationAddAluno();
 
+  // Função de envio de dados
   const onSubmit = async (data: AlunoFormData) => {
-    setLoading(true); // Iniciar o estado de carregamento
-  
+    setLoading(true);
+
     const formattedData = {
       ...data,
-      foto: fotoBase64,
-      dataNascimento: new Date(data.dataNascimento).toISOString(),
+      foto: fotoBase64, // Adiciona a imagem convertida para base64
+      dataNascimento: new Date(data.dataNascimento).toISOString(), // Formatar data
+      enderecos: enderecos.map((endereco) => ({
+        rua: endereco.rua,
+        numero: endereco.numero,
+        complemento: endereco.complemento,
+        bairro: endereco.bairro,
+        cidade: endereco.cidade,
+        estado: endereco.estado,
+        codigoPostal: endereco.codigoPostal,
+        pais: endereco.pais,
+      })),
     };
-  
+
+    // Log dos dados formatados antes de enviar
+    console.log('Dados enviados ao backend:', formattedData);
+
     try {
-      // Simulação de submissão (aqui você pode usar seu serviço de API real)
-      await new Promise((resolve) => setTimeout(resolve, 3000)); // Simular requisição com 2s
-      console.log(data);
-      
-      // Submeter os dados formatados via mutate
-      //@ts-ignore
+      // Simulação de submissão
+      await new Promise((resolve) => setTimeout(resolve, 3000)); // Simula requisição com 3 segundos
+
+      // Mutate para enviar os dados ao backend
       mutate(formattedData, {
         onSuccess: () => {
           Alert.alert('Success', 'Aluno adicionado com sucesso!');
-          reset(); 
-          setFotoBase64(''); 
-          navigation.goBack(); 
+          reset(); // Resetar o formulário
+          setFotoBase64(''); // Limpar a imagem
+          navigation.goBack(); // Navegar de volta
         },
         onError: (error) => {
-          console.error('Erro ao adicionar aluno:', error); 
+          console.error('Erro ao adicionar aluno:', error);
           Alert.alert('Error', 'Falha ao adicionar o aluno');
         },
       });
     } catch (error) {
-      console.log('Erro ao enviar dados', error);
+      console.error('Erro no envio dos dados', error);
       Alert.alert('Error', 'Falha ao enviar os dados.');
     } finally {
-      setLoading(false); 
+      setLoading(false);
     }
   };
-  
+
   return (
     <View style={styles.screenContainer}>
       <View style={styles.progressWheelOverlay}>
@@ -208,8 +225,6 @@ const AddAlunoForm = () => {
                       { label: 'Aluno', value: 'Aluno' },
                       { label: 'Professor', value: 'Professor' },
                     ]}
-                    //@ts-ignore
-                    placeholder={{}}
                     value={field.value}
                     onValueChange={field.onChange}
                   />
@@ -217,6 +232,7 @@ const AddAlunoForm = () => {
               )}
             />
           </View>
+          
           {/* Nome */}
           <View style={styles.selectColumn}>
             <Controller
@@ -257,6 +273,7 @@ const AddAlunoForm = () => {
               render={({ field }) => (
                 <FormField
                   label="Celular/WhatsApp"
+                //@ts-ignore
                   value={field.value}
                   onChangeText={field.onChange}
                   //@ts-ignore
@@ -295,11 +312,13 @@ const AddAlunoForm = () => {
               )}
             />
           </View>
+
+          {/* Botão de seleção de imagem */}
           <Button onPress={selectImage} style={styles.imageButton}>
             <Label color="white">Selecionar Foto</Label>
           </Button>
 
-          {/* Exibe a imagem selecionada, se houver */}
+          {/* Exibir imagem selecionada */}
           {fotoBase64 ? (
             <View style={styles.imagePreviewContainer}>
               <RNImage source={{ uri: fotoBase64 }} style={styles.imagePreview} />
@@ -314,6 +333,7 @@ const AddAlunoForm = () => {
               render={({ field }) => (
                 <FormField
                   label="Objetivos do Aluno"
+                //@ts-ignore
                   value={field.value}
                   onChangeText={field.onChange}
                   containerStyle={styles.fieldContainer}
@@ -322,22 +342,18 @@ const AddAlunoForm = () => {
             />
           </View>
 
-          
-  {/* Plano */}
-  <PlanoSelect />
-        
+          {/* Plano */}
+          <PlanoSelect />
 
-  
-  
-
+          {/* Botões de ação */}
           <XStack space="$4" justifyContent="center">
-          <Button onPress={handleSubmit(onSubmit)} style={styles.submitButton} disabled={loading}>
-        {loading ? (
-          <ActivityIndicator size="small" color="#fff" /> // Spinner enquanto carrega
-        ) : (
-          <Text color={"white"}>Enviar</Text> // Texto do botão quando não está carregando
-        )}
-      </Button>
+            <Button onPress={handleSubmit(onSubmit)} style={styles.submitButton} disabled={loading}>
+              {loading ? (
+                <ActivityIndicator size="small" color="#fff" />
+              ) : (
+                <Text color={'white'}>Enviar</Text>
+              )}
+            </Button>
             <Button onPress={() => navigation.goBack()} color="gray" style={styles.backButton}>
               Voltar
             </Button>
@@ -352,7 +368,7 @@ const styles = StyleSheet.create({
   screenContainer: {
     flex: 1,
     position: 'relative',
-    backgroundColor: '#cacaca', // Adicionado para uma cor de fundo clara
+    backgroundColor: '#cacaca',
   },
   progressWheelOverlay: {
     position: 'absolute',
@@ -381,7 +397,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   imageButton: {
-    backgroundColor: '#483D8B', 
+    backgroundColor: '#483D8B',
     padding: 10,
     borderRadius: 5,
     alignItems: 'center',
